@@ -34,7 +34,10 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
             });
             setNotifications(response.data);
         } catch (error) {
-            console.error('Error fetching notifications:', error);
+            console.error('🔥 Notifications Fetch Failure:', error);
+            if (error.response) {
+                console.error('📦 Backend Error Data:', error.response.data);
+            }
         } finally {
             setLoading(false);
         }
