@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { auth, API_URL } from '../firebase';
 import {
     Briefcase,
     Calendar as CalendarIcon,
@@ -41,18 +42,18 @@ const Dashboard = () => {
     const fetchDashboardData = async () => {
         try {
             const token = await currentUser.getIdToken();
-            const headers = { Authorization: `Bearer ${token}` };
+            const headers = { Authorization: `Bearer ${token} ` };
 
             // Fetch stats
-            const statsRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/dashboard/stats`, { headers });
+            const statsRes = await axios.get(`${API_URL} /api/dashboard / stats`, { headers });
             setStats(statsRes.data);
 
             // Fetch today's hearings
-            const hearingsRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/hearings/today`, { headers });
+            const hearingsRes = await axios.get(`${import.meta.env.VITE_API_URL} /api/hearings / today`, { headers });
             setTodayHearings(hearingsRes.data);
 
             // Fetch recent activity
-            const activityRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/dashboard/activity`, { headers });
+            const activityRes = await axios.get(`${import.meta.env.VITE_API_URL} /api/dashboard / activity`, { headers });
             setRecentActivity(activityRes.data);
         } catch (error) {
             console.error('Error fetching dashboard data:', error);
@@ -65,7 +66,7 @@ const Dashboard = () => {
     const StatCard = ({ icon: Icon, title, value, color, trend }) => (
         <div className="glass-card p-6 rounded-2xl hover:translate-y-[-4px] transition-all duration-500 group relative overflow-hidden">
             {/* Background Glow */}
-            <div className={`absolute -right-4 -bottom-4 w-24 h-24 rounded-full blur-[40px] opacity-20 ${color}`}></div>
+            <div className={`absolute - right - 4 - bottom - 4 w - 24 h - 24 rounded - full blur - [40px] opacity - 20 ${color} `}></div>
 
             <div className="flex items-start justify-between relative z-10">
                 <div>
@@ -80,7 +81,7 @@ const Dashboard = () => {
                         </div>
                     )}
                 </div>
-                <div className={`p-4 rounded-2xl shadow-lg border-2 border-white/50 ${color}`}>
+                <div className={`p - 4 rounded - 2xl shadow - lg border - 2 border - white / 50 ${color} `}>
                     <Icon className="w-6 h-6 text-white" />
                 </div>
             </div>
@@ -281,7 +282,7 @@ const Dashboard = () => {
                         ) : (
                             recentActivity.map((activity) => (
                                 <div key={activity.id} className="flex items-start gap-4 relative z-10 transition-transform hover:translate-x-1 cursor-default">
-                                    <div className={`w-[22px] h-[22px] rounded-full shrink-0 border-4 border-white shadow-sm ${activity?.iconColor?.replace('bg-', 'bg-') || 'bg-gray-400'}`}></div>
+                                    <div className={`w - [22px] h - [22px] rounded - full shrink - 0 border - 4 border - white shadow - sm ${activity?.iconColor?.replace('bg-', 'bg-') || 'bg-gray-400'} `}></div>
                                     <div className="min-w-0">
                                         <p className="text-[11px] md:text-xs text-gray-900 font-bold tracking-tight uppercase leading-tight line-clamp-1">
                                             {activity.title}

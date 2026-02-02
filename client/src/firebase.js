@@ -2,8 +2,11 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
 const getEnv = (key) => {
-    return import.meta.env[`VITE_${key}`] || import.meta.env[key];
+    return import.meta.env[`VITE_${key}`] || import.meta.env[key] || '';
 };
+
+// Global API URL
+export const API_URL = getEnv('API_URL');
 
 const firebaseConfig = {
     apiKey: getEnv('FIREBASE_API_KEY'),

@@ -8,7 +8,7 @@ import {
     GoogleAuthProvider,
     signInWithPopup
 } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth, API_URL } from '../firebase';
 import axios from 'axios';
 
 const AuthContext = createContext({});
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
                 // Fetch user profile from backend
                 try {
                     const token = await user.getIdToken();
-                    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/profile`, {
+                    const response = await axios.get(`${API_URL}/api/users/profile`, {
                         headers: { Authorization: `Bearer ${token}` }
                     });
                     setUserProfile(response.data || {});
@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }) => {
         // Create user profile in backend
         const token = await userCredential.user.getIdToken();
         await axios.post(
-            `${import.meta.env.VITE_API_URL}/api/users/profile`,
+            `${API_URL}/api/users/profile`,
             {
                 email,
                 fullName,
@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }) => {
         // Create or update user profile in backend with Google photo
         const token = await result.user.getIdToken();
         await axios.post(
-            `${import.meta.env.VITE_API_URL}/api/users/profile`,
+            `${API_URL}/api/users/profile`,
             {
                 email: result.user.email,
                 fullName: result.user.displayName,

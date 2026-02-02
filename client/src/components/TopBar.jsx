@@ -2,6 +2,7 @@ import { Search, Bell, User, LogOut, Menu } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { auth, API_URL } from '../firebase';
 import axios from 'axios';
 import NotificationDropdown from './NotificationDropdown';
 
@@ -26,7 +27,7 @@ const TopBar = ({ onSearchClick, onMenuClick }) => {
     const fetchUnreadCount = async () => {
         try {
             const token = await currentUser.getIdToken();
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/notifications`, {
+            const response = await axios.get(`${API_URL}/api/notifications/unread`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const unread = response.data.filter(n => !n.is_read).length;
