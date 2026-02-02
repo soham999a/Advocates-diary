@@ -23,45 +23,60 @@ router.get('/stats', verifyToken, async (req, res) => {
         }
 
         // Get total cases
-        const { count: totalCases } = await supabase
-            .from('cases')
-            .select('*', { count: 'exact', head: true })
-            .eq('created_by', user.id);
+        let stats = {
+            totalCases: 0,
+            upcomingHearings: 0,
+            overdueTasks: 0,
+            activeClients: 0
+        };
 
-        // Get upcoming hearings (next 30 days)
-        const thirtyDaysFromNow = new Date();
-        thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
+        try {
+            // Get total cases
+            const { count: totalCases, error: e1 } = await supabase
+                .from('cases')
+                .select('*', { count: 'exact', head: true })
+                .eq('created_by', user.id);
+            if (e1) console.error('Stats: Cases Error:', e1);
+            stats.totalCases = totalCases || 0;
 
-        const { count: upcomingHearings } = await supabase
-            .from('hearings')
-            .select('*', { count: 'exact', head: true })
-            .eq('created_by', user.id)
-            .gte('hearing_date', new Date().toISOString())
-            .lte('hearing_date', thirtyDaysFromNow.toISOString());
+            // Get upcoming hearings
+            const thirtyDaysFromNow = new Date();
+            thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
+            const { count: upcomingHearings, error: e2 } = await supabase
+                .from('hearings')
+                .select('*', { count: 'exact', head: true })
+                .eq('created_by', user.id)
+                .gte('hearing_date', new Date().toISOString())
+                .lte('hearing_date', thirtyDaysFromNow.toISOString());
+            if (e2) console.error('Stats: Hearings Error:', e2);
+            stats.upcomingHearings = upcomingHearings || 0;
 
-        // Get overdue tasks
-        const { count: overdueTasks } = await supabase
-            .from('tasks')
-            .select('*', { count: 'exact', head: true })
-            .eq('created_by', user.id)
-            .eq('status', 'Pending')
-            .lt('due_date', new Date().toISOString());
+            // Get overdue tasks
+            const { count: overdueTasks, error: e3 } = await supabase
+                .from('tasks')
+                .select('*', { count: 'exact', head: true })
+                .eq('created_by', user.id)
+                .eq('status', 'Pending')
+                .lt('due_date', new Date().toISOString());
+            if (e3) console.error('Stats: Tasks Error:', e3);
+            stats.overdueTasks = overdueTasks || 0;
 
-        // Get active clients
-        const { count: activeClients } = await supabase
-            .from('clients')
-            .select('*', { count: 'exact', head: true })
-            .eq('created_by', user.id);
+            // Get active clients
+            const { count: activeClients, error: e4 } = await supabase
+                .from('clients')
+                .select('*', { count: 'exact', head: true })
+                .eq('created_by', user.id);
+            if (e4) console.error('Stats: Clients Error:', e4);
+            stats.activeClients = activeClients || 0;
 
-        res.json({
-            totalCases: totalCases || 0,
-            upcomingHearings: upcomingHearings || 0,
-            overdueTasks: overdueTasks || 0,
-            activeClients: activeClients || 0
-        });
+            res.json(stats);
+        } catch (dbError) {
+            console.error('Database failure in stats:', dbError);
+            res.status(500).json({ error: 'Database query failed', message: dbError.message });
+        }
     } catch (error) {
-        console.error('Error fetching dashboard stats:', error);
-        res.status(500).json({ error: error.message });
+        console.error('Critical Dashboard Stats Failure:', error);
+        res.status(500).json({ error: 'Server error', message: error.message });
     }
 });
 

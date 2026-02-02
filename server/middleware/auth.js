@@ -17,18 +17,22 @@ const verifyToken = async (req, res, next) => {
         console.log('⚠️ Authentication: Processing token');
 
         // Extract user info from the token (basic decode without verification)
-        // This is for DEMO purposes only
         try {
             const parts = token.split('.');
             if (parts.length === 3) {
                 const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
-                req.user = { uid: payload.user_id || payload.sub || 'unknown' };
+                console.log('✅ Token decoded for UID:', payload.user_id || payload.sub);
+                req.user = {
+                    uid: payload.user_id || payload.sub || 'unknown',
+                    email: payload.email
+                };
             } else {
-                req.user = { uid: 'demo-user-' + Date.now() };
+                console.warn('⚠️ Non-standard token format, using fallback');
+                req.user = { uid: 'fallback-' + (token.substring(0, 10)) };
             }
         } catch (e) {
-            console.warn('Decode failed, using demo user');
-            req.user = { uid: 'demo-user-' + Date.now() };
+            console.error('❌ Token decode failed:', e.message);
+            req.user = { uid: 'error-fallback-' + Date.now() };
         }
 
         next();

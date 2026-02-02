@@ -36,8 +36,13 @@ app.use('/api/test-db', testDbRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ error: 'Something went wrong!' });
+    console.error('🔥 Server Error:', err);
+    res.status(500).json({
+        error: 'Backend Crash',
+        message: err.message,
+        path: req.path,
+        stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    });
 });
 
 // Export for Vercel
