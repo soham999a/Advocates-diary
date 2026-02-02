@@ -128,6 +128,9 @@ const Dashboard = () => {
                 <button onClick={() => setIsCaseModalOpen(true)} className="flex-1 min-w-[140px] flex items-center justify-center gap-2 py-2.5 md:py-3 bg-primary-600 text-white rounded-xl font-bold text-xs md:text-sm hover:bg-primary-700 active:scale-[0.98] transition-all">
                     <Plus className="w-4 h-4" /> New Case
                 </button>
+                <button onClick={() => setIsClientModalOpen(true)} className="flex-1 min-w-[140px] flex items-center justify-center gap-2 py-2.5 md:py-3 bg-white text-gray-900 border border-gray-100 rounded-xl font-bold text-xs md:text-sm hover:bg-gray-50 active:scale-[0.98] transition-all shadow-sm">
+                    <UserPlus className="w-4 h-4 text-amber-500" /> Client
+                </button>
                 <button onClick={() => setIsHearingModalOpen(true)} className="flex-1 min-w-[140px] flex items-center justify-center gap-2 py-2.5 md:py-3 bg-white text-gray-900 border border-gray-100 rounded-xl font-bold text-xs md:text-sm hover:bg-gray-50 active:scale-[0.98] transition-all shadow-sm">
                     <CalendarIcon className="w-4 h-4 text-emerald-500" /> Schedule
                 </button>
