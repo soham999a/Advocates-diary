@@ -3,15 +3,21 @@ import { X, Upload, FileText } from 'lucide-react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
-const AddDocumentModal = ({ isOpen, onClose, onDocumentAdded }) => {
+const AddDocumentModal = ({ isOpen, onClose, onDocumentAdded, initialCaseId }) => {
     const { currentUser } = useAuth();
     const [loading, setLoading] = useState(false);
     const [cases, setCases] = useState([]);
     const [formData, setFormData] = useState({
-        case_id: '',
+        case_id: initialCaseId || '',
         filename: '',
         file_type: 'Order'
     });
+
+    useEffect(() => {
+        if (initialCaseId) {
+            setFormData(prev => ({ ...prev, case_id: initialCaseId }));
+        }
+    }, [initialCaseId]);
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadProgress, setUploadProgress] = useState(0);
 

@@ -5,6 +5,8 @@ import { ArrowLeft, Edit, FileText, Calendar as CalendarIcon, Clock } from 'luci
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import EditCaseModal from '../components/EditCaseModal';
+import AddHearingModal from '../components/AddHearingModal';
+import AddDocumentModal from '../components/AddDocumentModal';
 
 const CaseDetail = () => {
     const { id } = useParams();
@@ -14,6 +16,8 @@ const CaseDetail = () => {
     const [caseData, setCaseData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isHearingModalOpen, setIsHearingModalOpen] = useState(false);
+    const [isDocumentModalOpen, setIsDocumentModalOpen] = useState(false);
 
     useEffect(() => {
         fetchCaseDetails();
@@ -200,7 +204,12 @@ const CaseDetail = () => {
                     <div className="space-y-4">
                         <div className="flex items-center justify-between">
                             <h3 className="text-lg font-semibold text-gray-900">Hearings</h3>
-                            <button className="btn-primary text-sm">Add Hearing</button>
+                            <button
+                                onClick={() => setIsHearingModalOpen(true)}
+                                className="btn-primary text-sm"
+                            >
+                                Add Hearing
+                            </button>
                         </div>
                         <div className="space-y-3">
                             {Array.isArray(caseData?.hearings) && caseData.hearings.map((hearing) => (
@@ -225,7 +234,12 @@ const CaseDetail = () => {
                     <div className="space-y-4">
                         <div className="flex items-center justify-between">
                             <h3 className="text-lg font-semibold text-gray-900">Documents</h3>
-                            <button className="btn-primary text-sm">Upload Document</button>
+                            <button
+                                onClick={() => setIsDocumentModalOpen(true)}
+                                className="btn-primary text-sm"
+                            >
+                                Upload Document
+                            </button>
                         </div>
                         <div className="space-y-3">
                             {Array.isArray(caseData?.documents) && caseData.documents.map((doc) => (
@@ -250,6 +264,20 @@ const CaseDetail = () => {
                 onClose={() => setIsEditModalOpen(false)}
                 caseData={caseData}
                 onCaseUpdated={fetchCaseDetails}
+            />
+
+            <AddHearingModal
+                isOpen={isHearingModalOpen}
+                onClose={() => setIsHearingModalOpen(false)}
+                onHearingAdded={fetchCaseDetails}
+                initialCaseId={id}
+            />
+
+            <AddDocumentModal
+                isOpen={isDocumentModalOpen}
+                onClose={() => setIsDocumentModalOpen(false)}
+                onDocumentAdded={fetchCaseDetails}
+                initialCaseId={id}
             />
         </div>
     );

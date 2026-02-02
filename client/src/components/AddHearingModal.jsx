@@ -3,17 +3,23 @@ import { X } from 'lucide-react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
-const AddHearingModal = ({ isOpen, onClose, onHearingAdded }) => {
+const AddHearingModal = ({ isOpen, onClose, onHearingAdded, initialCaseId }) => {
     const { currentUser } = useAuth();
     const [loading, setLoading] = useState(false);
     const [cases, setCases] = useState([]);
     const [formData, setFormData] = useState({
-        case_id: '',
+        case_id: initialCaseId || '',
         hearing_date: '',
         hearing_type: 'Regular',
         court: '',
         notes: ''
     });
+
+    useEffect(() => {
+        if (initialCaseId) {
+            setFormData(prev => ({ ...prev, case_id: initialCaseId }));
+        }
+    }, [initialCaseId]);
 
     useEffect(() => {
         if (isOpen) {
