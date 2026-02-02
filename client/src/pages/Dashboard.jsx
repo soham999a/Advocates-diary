@@ -40,9 +40,10 @@ const Dashboard = () => {
     }, []);
 
     const fetchDashboardData = async () => {
+        if (!currentUser) return;
         try {
             const token = await currentUser.getIdToken();
-            const headers = { Authorization: `Bearer ${token} ` };
+            const headers = { Authorization: `Bearer ${token}` };
 
             // Fetch stats
             const statsRes = await axios.get(`${API_URL}/api/dashboard/stats`, { headers });

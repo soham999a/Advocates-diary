@@ -35,6 +35,7 @@ const EditCaseModal = ({ isOpen, onClose, caseData, onCaseUpdated }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!currentUser) return;
         setLoading(true);
         try {
             const token = await currentUser.getIdToken();

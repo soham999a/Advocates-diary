@@ -25,10 +25,11 @@ const CaseDetail = () => {
     }, [id]);
 
     const fetchCaseDetails = async () => {
+        if (!currentUser) return;
         try {
             const token = await currentUser.getIdToken();
-            const response = await axios.get(`${API_URL} /api/cases / ${id} `, {
-                headers: { Authorization: `Bearer ${token} ` }
+            const response = await axios.get(`${API_URL}/api/cases/${id}`, {
+                headers: { Authorization: `Bearer ${token}` }
             });
             setCaseData(response.data);
         } catch (error) {
@@ -134,8 +135,8 @@ const CaseDetail = () => {
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={`flex items - center gap - 2 pb - 4 border - b - 2 transition - colors ${activeTab === tab.id
-                                    ? 'border-primary-600 text-primary-600'
-                                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                                ? 'border-primary-600 text-primary-600'
+                                : 'border-transparent text-gray-600 hover:text-gray-900'
                                 } `}
                         >
                             <tab.icon className="w-5 h-5" />

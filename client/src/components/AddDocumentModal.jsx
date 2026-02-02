@@ -54,6 +54,7 @@ const AddDocumentModal = ({ isOpen, onClose, onDocumentAdded, initialCaseId }) =
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!currentUser) return;
         if (!selectedFile && !formData.filename) return;
 
         setLoading(true);
@@ -77,7 +78,7 @@ const AddDocumentModal = ({ isOpen, onClose, onDocumentAdded, initialCaseId }) =
             // Here we just save the metadata to the database
             await axios.post(`${API_URL}/api/documents`, {
                 ...formData,
-                file_url: 'https://example.com/' + (selectedFile?.name || 'mock-file.pdf') // Mock URL
+                file_url: `https://example.com/${selectedFile?.name || 'mock-file.pdf'}` // Mock URL
             }, {
                 headers: { Authorization: `Bearer ${token}` }
             });

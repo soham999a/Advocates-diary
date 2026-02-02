@@ -25,15 +25,17 @@ const GlobalSearch = ({ isOpen, onClose }) => {
     }, [isOpen]);
 
     const fetchSearchData = async () => {
+        if (!currentUser) return;
+        setLoading(true);
         try {
             const token = await currentUser.getIdToken();
-            const headers = { Authorization: `Bearer ${token} ` };
+            const headers = { Authorization: `Bearer ${token}` };
 
             // Fetch all searchable data
             const [casesRes, clientsRes, hearingsRes] = await Promise.all([
-                axios.get(`${API_URL} /api/cases`, { headers }),
-                axios.get(`${API_URL} /api/clients`, { headers }),
-                axios.get(`${API_URL} /api/hearings`, { headers })
+                axios.get(`${API_URL}/api/cases`, { headers }),
+                axios.get(`${API_URL}/api/clients`, { headers }),
+                axios.get(`${API_URL}/api/hearings`, { headers })
             ]);
 
             const combinedData = [

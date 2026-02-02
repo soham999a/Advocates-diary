@@ -46,6 +46,7 @@ const AddHearingModal = ({ isOpen, onClose, onHearingAdded, initialCaseId }) => 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!currentUser) return;
         setLoading(true);
         try {
             const token = await currentUser.getIdToken();

@@ -17,6 +17,7 @@ const ClientDetail = () => {
     }, [id]);
 
     const fetchClientDetails = async () => {
+        if (!currentUser) return;
         try {
             const token = await currentUser.getIdToken();
             const response = await axios.get(`${API_URL}/api/clients/${id}`, {

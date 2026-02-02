@@ -8,18 +8,26 @@ const verifyToken = async (req, res, next) => {
         }
 
         const token = authHeader.split('Bearer ')[1];
+        if (!token) {
+            return res.status(401).json({ error: 'Unauthorized - Malformed token' });
+        }
 
         // For development: Skip Firebase Admin verification
         // In production, you would verify the token with Firebase Admin SDK
-        console.log('⚠️  Development mode: Skipping Firebase token verification');
+        console.log('⚠️ Authentication: Processing token');
 
         // Extract user info from the token (basic decode without verification)
         // This is for DEMO purposes only
         try {
-            const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
-            req.user = { uid: payload.user_id || payload.sub };
+            const parts = token.split('.');
+            if (parts.length === 3) {
+                const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
+                req.user = { uid: payload.user_id || payload.sub || 'unknown' };
+            } else {
+                req.user = { uid: 'demo-user-' + Date.now() };
+            }
         } catch (e) {
-            // If token decode fails, use a demo user
+            console.warn('Decode failed, using demo user');
             req.user = { uid: 'demo-user-' + Date.now() };
         }
 

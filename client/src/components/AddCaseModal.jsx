@@ -43,11 +43,12 @@ const AddCaseModal = ({ isOpen, onClose, onCaseAdded }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!currentUser) return;
         setLoading(true);
         try {
             const token = await currentUser.getIdToken();
-            await axios.post(`${API_URL} /api/cases`, formData, {
-                headers: { Authorization: `Bearer ${token} ` }
+            await axios.post(`${API_URL}/api/cases`, formData, {
+                headers: { Authorization: `Bearer ${token}` }
             });
             onCaseAdded();
             onClose();

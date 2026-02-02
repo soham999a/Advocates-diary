@@ -20,6 +20,7 @@ const AddClientModal = ({ isOpen, onClose, onClientAdded }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!currentUser) return;
         setLoading(true);
         try {
             const token = await currentUser.getIdToken();

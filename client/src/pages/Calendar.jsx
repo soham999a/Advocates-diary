@@ -24,10 +24,11 @@ const Calendar = () => {
     }, []);
 
     const fetchHearings = async () => {
+        if (!currentUser) return;
         try {
             const token = await currentUser.getIdToken();
-            const response = await axios.get(`${API_URL} /api/hearings`, {
-                headers: { Authorization: `Bearer ${token} ` }
+            const response = await axios.get(`${API_URL}/api/hearings`, {
+                headers: { Authorization: `Bearer ${token}` }
             });
 
             const formattedEvents = Array.isArray(response.data) ? response.data.map(hearing => ({

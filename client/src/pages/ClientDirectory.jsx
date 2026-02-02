@@ -19,10 +19,11 @@ const ClientDirectory = () => {
     }, []);
 
     const fetchClients = async () => {
+        if (!currentUser) return;
         try {
             const token = await currentUser.getIdToken();
-            const response = await axios.get(`${API_URL} /api/clients`, {
-                headers: { Authorization: `Bearer ${token} ` }
+            const response = await axios.get(`${API_URL}/api/clients`, {
+                headers: { Authorization: `Bearer ${token}` }
             });
             setClients(response.data);
         } catch (error) {

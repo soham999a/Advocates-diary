@@ -26,6 +26,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
     }, [isOpen]);
 
     const fetchNotifications = async () => {
+        if (!currentUser) return;
         try {
             const token = await currentUser.getIdToken();
             const response = await axios.get(`${API_URL}/api/notifications`, {
@@ -40,6 +41,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
     };
 
     const markAsRead = async (id) => {
+        if (!currentUser) return;
         try {
             const token = await currentUser.getIdToken();
             await axios.patch(`${API_URL}/api/notifications/${id}/read`, {}, {
