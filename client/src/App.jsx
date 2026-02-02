@@ -19,6 +19,7 @@ import ClientDetail from './pages/ClientDetail';
 import EFiling from './pages/EFiling';
 
 function App() {
+    console.log('Advocate Diary: App component rendering');
     return (
         <AuthProvider>
             <Router>
