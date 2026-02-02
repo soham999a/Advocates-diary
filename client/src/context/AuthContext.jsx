@@ -21,6 +21,12 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (!auth) {
+            console.error('Firebase Auth is not initialized. Check your environment variables.');
+            setLoading(false);
+            return;
+        }
+
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             setCurrentUser(user);
 
@@ -31,10 +37,10 @@ export const AuthProvider = ({ children }) => {
                     const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/profile`, {
                         headers: { Authorization: `Bearer ${token}` }
                     });
-                    setUserProfile(response.data);
+                    setUserProfile(response.data || {});
                 } catch (error) {
                     console.error('Error fetching user profile:', error.response?.data || error.message);
-                    // Don't set userProfile to null here if we still want to keep the Firebase user
+                    setUserProfile({}); // Set to empty object so we don't block
                 }
             } else {
                 setUserProfile(null);

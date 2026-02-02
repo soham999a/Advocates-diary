@@ -4,7 +4,11 @@
     "outputDirectory": "client/dist",
     "rewrites": [
         {
-            "source": "/((?!assets/|favicon.ico|vite.svg|.*\\..*).*)",
+            "source": "/(assets/.*)",
+            "destination": "/$1"
+        },
+        {
+            "source": "/((?!api/).*)",
             "destination": "/index.html"
         }
     ]
