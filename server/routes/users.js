@@ -21,18 +21,17 @@ router.post('/profile', verifyToken, async (req, res) => {
                 photo_url: photoURL || null,
                 updated_at: new Date().toISOString()
             }, { onConflict: 'firebase_uid' })
-            .select()
-            .single();
+            .select(); // Use select() without .single() to be safer during upsert RLS
 
         if (error) {
             console.error('Supabase Upsert Error:', error);
             return res.status(500).json({
-                error: 'Database error during profile sync',
+                error: 'Database error',
                 message: error.message,
                 details: error
             });
         }
-        res.json(data);
+        res.json(data ? data[0] : null);
     } catch (error) {
         console.error('Crash in /api/users/profile POST:', error);
         res.status(500).json({ error: 'Server crash during profile sync', message: error.message });

@@ -6,30 +6,55 @@ const { verifyToken } = require('../middleware/auth');
 // Get all notifications for the current user
 router.get('/', verifyToken, async (req, res) => {
     try {
+        const firebaseUid = req.user.uid;
         const { data: user, error: userError } = await supabase
             .from('users')
             .select('id')
-            .eq('firebase_uid', req.user.uid)
+            .eq('firebase_uid', firebaseUid)
             .single();
 
         if (userError || !user) {
-            console.warn(`Notifications: User profile not found for UID: ${req.user.uid}. Returning empty list.`);
             return res.json([]);
         }
 
-        const { data: notifications, error } = await supabase
+        const { data, error } = await supabase
             .from('notifications')
             .select('*')
             .eq('user_id', user.id)
             .order('created_at', { ascending: false });
 
-        if (error) {
-            console.error('Supabase Notification Error:', error);
-            return res.json([]); // Return empty rather than 500
-        }
-        res.json(notifications || []);
+        if (error) throw error;
+        res.json(data || []);
     } catch (error) {
-        console.error('Crash in /api/notifications GET:', error);
+        console.error('Error fetching notifications:', error);
+        res.json([]); // Return empty list on error for better UX
+    }
+});
+
+// Get unread notifications only (for the badge)
+router.get('/unread', verifyToken, async (req, res) => {
+    try {
+        const firebaseUid = req.user.uid;
+        const { data: user, error: userError } = await supabase
+            .from('users')
+            .select('id')
+            .eq('firebase_uid', firebaseUid)
+            .single();
+
+        if (userError || !user) {
+            return res.json([]);
+        }
+
+        const { data, error } = await supabase
+            .from('notifications')
+            .select('*')
+            .eq('user_id', user.id)
+            .eq('is_read', false);
+
+        if (error) throw error;
+        res.json(data || []);
+    } catch (error) {
+        console.error('Error fetching unread notifications:', error);
         res.json([]);
     }
 });
