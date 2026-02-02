@@ -22,6 +22,7 @@ const hearingsRoutes = require('./routes/hearings');
 const documentsRoutes = require('./routes/documents');
 const dashboardRoutes = require('./routes/dashboard');
 const notificationsRoutes = require('./routes/notifications');
+const testDbRoutes = require('./routes/test-db');
 
 // Use routes
 app.use('/api/users', usersRoutes);
@@ -31,6 +32,7 @@ app.use('/api/hearings', hearingsRoutes);
 app.use('/api/documents', documentsRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/notifications', notificationsRoutes);
+app.use('/api/test-db', testDbRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

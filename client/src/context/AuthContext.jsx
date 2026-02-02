@@ -90,19 +90,24 @@ export const AuthProvider = ({ children }) => {
         const result = await signInWithPopup(auth, provider);
 
         // Create or update user profile in backend with Google photo
-        const token = await result.user.getIdToken();
-        await axios.post(
-            `${API_URL}/api/users/profile`,
-            {
-                email: result.user.email,
-                fullName: result.user.displayName,
-                photoURL: result.user.photoURL,
-                barCouncilNumber: ''
-            },
-            {
-                headers: { Authorization: `Bearer ${token}` }
-            }
-        );
+        try {
+            const token = await result.user.getIdToken();
+            await axios.post(
+                `${API_URL}/api/users/profile`,
+                {
+                    email: result.user.email,
+                    fullName: result.user.displayName,
+                    photoURL: result.user.photoURL,
+                    barCouncilNumber: ''
+                },
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            );
+        } catch (error) {
+            console.error('Google sign-in profile sync failed:', error.response?.data || error.message);
+            // Allow login to continue even if profile sync fails
+        }
 
         return result;
     };
