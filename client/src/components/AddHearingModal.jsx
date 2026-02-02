@@ -34,7 +34,7 @@ const AddHearingModal = ({ isOpen, onClose, onHearingAdded, initialCaseId }) => 
             const response = await axios.get(`${API_URL}/api/cases`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            setCases(response.data);
+            setCases(Array.isArray(response.data) ? response.data : []);
         } catch (error) {
             console.error('Error fetching cases:', error);
         }
@@ -91,7 +91,7 @@ const AddHearingModal = ({ isOpen, onClose, onHearingAdded, initialCaseId }) => 
                             required
                         >
                             <option value="">Select an active case</option>
-                            {cases.map(c => (
+                            {Array.isArray(cases) && cases.map(c => (
                                 <option key={c.id} value={c.id}>
                                     {c.case_number} - {c.case_title}
                                 </option>
