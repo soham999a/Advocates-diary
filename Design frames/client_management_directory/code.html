@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Client Management Directory - LexAdvocate Pro</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d121c] dark:text-gray-100 min-h-screen">
+<div class="flex h-screen flex-col overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e7ebf4] dark:border-gray-800 bg-white dark:bg-background-dark px-10 py-3 z-10 shrink-0">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-6 bg-primary text-white rounded flex items-center justify-center">
+<span class="material-symbols-outlined !text-[18px]">gavel</span>
+</div>
+<h2 class="text-[#0d121c] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">LexAdvocate Pro</h2>
+</div>
+<div class="flex items-center gap-9">
+<a class="text-[#0d121c] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-bold leading-normal" href="#">Clients</a>
+<a class="text-[#0d121c] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Hearings</a>
+<a class="text-[#0d121c] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">E-filing</a>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-4">
+<div class="flex items-center gap-2">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#e7ebf4] dark:bg-gray-800 text-[#0d121c] dark:text-gray-100 gap-2 text-sm font-bold leading-normal px-2.5">
+<span class="material-symbols-outlined !text-xl">notifications</span>
+</button>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#e7ebf4] dark:bg-gray-800 text-[#0d121c] dark:text-gray-100 gap-2 text-sm font-bold leading-normal px-2.5">
+<span class="material-symbols-outlined !text-xl">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="Advocate profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDpi8PZJFXh3KavXUQ8dmSVSDxz5GGQAhJZHsXwlSROKfllDlCmOZPRPcZMtOWowHCgI8EbbCD-z-EX4Ory-RrDZn8XrhAjqAG0eCIh4xJY9X0CP77fx1WeVckDqHJlhQWeKUMFkx-HZGTZAf-tjNpnwwW_78kFUh5Pda--7TS3mqhyYIgRi_ra9h-CqKFUlc2lvTp0PMr7AX60qyDoZ_zrNJyYHV5_tLR0_Dw1VS8SYblZdEc8_WbDoc0FmGyO6kMHwDFHX5WAkjlB");'></div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Left Sidebar: Client Directory -->
+<aside class="w-80 border-r border-[#e7ebf4] dark:border-gray-800 bg-white dark:bg-background-dark flex flex-col shrink-0">
+<div class="p-4 flex flex-col gap-4 border-b border-[#e7ebf4] dark:border-gray-800">
+<div class="flex items-center justify-between">
+<h1 class="text-[#0d121c] dark:text-white text-lg font-bold leading-normal">Directory</h1>
+<span class="bg-primary/10 text-primary px-2 py-0.5 rounded text-xs font-bold">124 Clients</span>
+</div>
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined !text-lg mr-2">person_add</span>
+<span>Add New Client</span>
+</button>
+</div>
+<div class="px-4 py-3 shrink-0">
+<label class="flex flex-col min-w-40 h-10 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#49659c] flex border-none bg-[#e7ebf4] dark:bg-gray-800 items-center justify-center pl-3 rounded-l-lg" data-icon="MagnifyingGlass">
+<span class="material-symbols-outlined !text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d121c] dark:text-gray-100 focus:outline-0 focus:ring-0 border-none bg-[#e7ebf4] dark:bg-gray-800 h-full placeholder:text-[#49659c] px-3 rounded-l-none text-sm font-normal" placeholder="Search by name, ID..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar">
+<div class="flex flex-col">
+<!-- Client Item - Active -->
+<div class="flex items-start gap-3 px-4 py-4 border-b border-[#e7ebf4] dark:border-gray-800 bg-primary/5 border-l-4 border-l-primary cursor-pointer">
+<div class="bg-primary/10 size-10 rounded-full flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<p class="text-[#0d121c] dark:text-white text-sm font-bold truncate">Johnathan Doe</p>
+<span class="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-bold">Active</span>
+</div>
+<p class="text-[#49659c] text-xs font-normal">+1 234 567 890</p>
+<div class="mt-2 flex items-center gap-1.5">
+<span class="material-symbols-outlined !text-[14px] text-primary">gavel</span>
+<p class="text-primary text-[11px] font-bold">3 Active Cases</p>
+</div>
+</div>
+</div>
+<!-- Client Item -->
+<div class="flex items-start gap-3 px-4 py-4 border-b border-[#e7ebf4] dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer transition-colors">
+<div class="bg-gray-100 dark:bg-gray-800 size-10 rounded-full flex items-center justify-center text-gray-500 shrink-0">
+<span class="material-symbols-outlined">domain</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<p class="text-[#0d121c] dark:text-white text-sm font-semibold truncate">Acme Corporation</p>
+</div>
+<p class="text-[#49659c] text-xs font-normal">info@acme.com</p>
+<div class="mt-2 flex items-center gap-1.5">
+<span class="material-symbols-outlined !text-[14px] text-gray-400">gavel</span>
+<p class="text-gray-500 text-[11px] font-medium">8 Active Cases</p>
+</div>
+</div>
+</div>
+<!-- Client Item -->
+<div class="flex items-start gap-3 px-4 py-4 border-b border-[#e7ebf4] dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer transition-colors">
+<div class="bg-gray-100 dark:bg-gray-800 size-10 rounded-full flex items-center justify-center text-gray-500 shrink-0">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<p class="text-[#0d121c] dark:text-white text-sm font-semibold truncate">Jane Smith</p>
+</div>
+<p class="text-[#49659c] text-xs font-normal">+1 987 654 321</p>
+<div class="mt-2 flex items-center gap-1.5">
+<span class="material-symbols-outlined !text-[14px] text-gray-400">gavel</span>
+<p class="text-gray-500 text-[11px] font-medium">1 Active Case</p>
+</div>
+</div>
+</div>
+<!-- Client Item -->
+<div class="flex items-start gap-3 px-4 py-4 border-b border-[#e7ebf4] dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer transition-colors">
+<div class="bg-gray-100 dark:bg-gray-800 size-10 rounded-full flex items-center justify-center text-gray-500 shrink-0">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<p class="text-[#0d121c] dark:text-white text-sm font-semibold truncate">Michael Brown</p>
+</div>
+<p class="text-[#49659c] text-xs font-normal">m.brown@email.com</p>
+<div class="mt-2 flex items-center gap-1.5">
+<span class="material-symbols-outlined !text-[14px] text-gray-400">gavel</span>
+<p class="text-gray-500 text-[11px] font-medium">2 Active Cases</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Detail Area -->
+<main class="flex-1 bg-background-light dark:bg-[#0b0f1a] overflow-y-auto">
+<div class="p-8 max-w-5xl mx-auto space-y-6">
+<!-- Detail Header -->
+<div class="flex items-end justify-between bg-white dark:bg-background-dark p-6 rounded-xl border border-[#ced7e8] dark:border-gray-800 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="size-20 bg-primary/10 rounded-xl flex items-center justify-center text-primary" data-alt="Client profile large icon">
+<span class="material-symbols-outlined !text-4xl">person</span>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#0d121c] dark:text-white">Johnathan Doe</h2>
+<p class="text-[#49659c] dark:text-gray-400">Client ID: #CL-1092 • Corporate Individual</p>
+<div class="mt-2 flex gap-2">
+<button class="bg-primary text-white h-8 px-3 rounded text-xs font-bold flex items-center gap-1.5 hover:bg-primary/90">
+<span class="material-symbols-outlined !text-[16px]">call</span> Call
+                                    </button>
+<button class="bg-[#e7ebf4] dark:bg-gray-800 text-[#0d121c] dark:text-gray-100 h-8 px-3 rounded text-xs font-bold flex items-center gap-1.5 hover:bg-gray-200 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined !text-[16px]">mail</span> Email
+                                    </button>
+<button class="bg-[#e7ebf4] dark:bg-gray-800 text-[#0d121c] dark:text-gray-100 h-8 px-3 rounded text-xs font-bold flex items-center gap-1.5 hover:bg-gray-200 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined !text-[16px]">chat_bubble</span> Message
+                                    </button>
+</div>
+</div>
+</div>
+<div class="text-right">
+<button class="text-primary text-sm font-bold flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined !text-[18px]">edit</span> Edit Profile
+                            </button>
+<p class="text-[11px] text-[#49659c] mt-1 italic">Last updated 2 hours ago</p>
+</div>
+</div>
+<!-- Metric Cards -->
+<div class="grid grid-cols-3 gap-6">
+<div class="bg-white dark:bg-background-dark p-5 rounded-xl border border-[#ced7e8] dark:border-gray-800 shadow-sm">
+<p class="text-[#49659c] dark:text-gray-400 text-sm font-medium">Active Cases</p>
+<div class="flex items-center justify-between mt-2">
+<span class="text-2xl font-bold text-[#0d121c] dark:text-white">03</span>
+<div class="bg-primary/10 text-primary p-2 rounded-lg">
+<span class="material-symbols-outlined">gavel</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-background-dark p-5 rounded-xl border border-[#ced7e8] dark:border-gray-800 shadow-sm">
+<p class="text-[#49659c] dark:text-gray-400 text-sm font-medium">Total Fees Invoiced</p>
+<div class="flex items-center justify-between mt-2">
+<span class="text-2xl font-bold text-[#0d121c] dark:text-white">$12,450</span>
+<div class="bg-green-100 text-green-600 p-2 rounded-lg">
+<span class="material-symbols-outlined">payments</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-background-dark p-5 rounded-xl border border-[#ced7e8] dark:border-gray-800 shadow-sm">
+<p class="text-[#49659c] dark:text-gray-400 text-sm font-medium">Pending Dues</p>
+<div class="flex items-center justify-between mt-2">
+<span class="text-2xl font-bold text-red-600">$1,200</span>
+<div class="bg-red-50 text-red-600 p-2 rounded-lg">
+<span class="material-symbols-outlined">pending_actions</span>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-6">
+<!-- Case List Table -->
+<div class="col-span-2 bg-white dark:bg-background-dark rounded-xl border border-[#ced7e8] dark:border-gray-800 overflow-hidden shadow-sm">
+<div class="px-6 py-4 border-b border-[#e7ebf4] dark:border-gray-800 flex justify-between items-center">
+<h3 class="font-bold text-[#0d121c] dark:text-white">Active Matters</h3>
+<button class="text-primary text-xs font-bold hover:underline">View All Cases</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-gray-50 dark:bg-gray-800/30 text-[11px] uppercase tracking-wider text-[#49659c] dark:text-gray-400">
+<th class="px-6 py-3 font-semibold">Case ID</th>
+<th class="px-6 py-3 font-semibold">Title</th>
+<th class="px-6 py-3 font-semibold">Court</th>
+<th class="px-6 py-3 font-semibold">Next Hearing</th>
+<th class="px-6 py-3 font-semibold">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e7ebf4] dark:divide-gray-800">
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/20 transition-colors">
+<td class="px-6 py-4 text-xs font-bold text-primary">#CIV-2024-88</td>
+<td class="px-6 py-4 text-xs font-medium text-[#0d121c] dark:text-white">Doe vs. Global Logistics</td>
+<td class="px-6 py-4 text-xs text-[#49659c]">District Court 04</td>
+<td class="px-6 py-4 text-xs text-[#0d121c] dark:text-gray-200">Oct 12, 2024</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700">Argument</span>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/20 transition-colors">
+<td class="px-6 py-4 text-xs font-bold text-primary">#PROP-2023-12</td>
+<td class="px-6 py-4 text-xs font-medium text-[#0d121c] dark:text-white">Estate of Martha Doe</td>
+<td class="px-6 py-4 text-xs text-[#49659c]">High Court</td>
+<td class="px-6 py-4 text-xs text-[#0d121c] dark:text-gray-200">Nov 05, 2024</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700">Evidence</span>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/20 transition-colors">
+<td class="px-6 py-4 text-xs font-bold text-primary">#TAX-2024-05</td>
+<td class="px-6 py-4 text-xs font-medium text-[#0d121c] dark:text-white">Doe Income Tax Appeal</td>
+<td class="px-6 py-4 text-xs text-[#49659c]">Tax Tribunal</td>
+<td class="px-6 py-4 text-xs text-[#0d121c] dark:text-gray-200">Dec 01, 2024</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700">E-filed</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Communication Log -->
+<div class="bg-white dark:bg-background-dark rounded-xl border border-[#ced7e8] dark:border-gray-800 overflow-hidden shadow-sm flex flex-col">
+<div class="px-6 py-4 border-b border-[#e7ebf4] dark:border-gray-800">
+<h3 class="font-bold text-[#0d121c] dark:text-white">Communication Log</h3>
+</div>
+<div class="flex-1 p-4 overflow-y-auto max-h-[400px]">
+<div class="relative border-l-2 border-[#e7ebf4] dark:border-gray-800 ml-3 py-2 space-y-6">
+<!-- Log Item -->
+<div class="relative pl-6">
+<div class="absolute -left-[9px] top-0 size-4 bg-primary rounded-full border-4 border-white dark:border-background-dark"></div>
+<p class="text-[10px] font-bold text-primary uppercase">Today, 10:45 AM</p>
+<p class="text-sm font-semibold text-[#0d121c] dark:text-white mt-0.5">Outgoing Call</p>
+<p class="text-xs text-[#49659c] mt-1 line-clamp-2">Discussed the upcoming hearing strategy for the Global Logistics case. Client requested more docs.</p>
+</div>
+<!-- Log Item -->
+<div class="relative pl-6">
+<div class="absolute -left-[9px] top-0 size-4 bg-gray-300 dark:bg-gray-700 rounded-full border-4 border-white dark:border-background-dark"></div>
+<p class="text-[10px] font-bold text-gray-500 uppercase">Oct 08, 2024</p>
+<p class="text-sm font-semibold text-[#0d121c] dark:text-white mt-0.5">Email Sent</p>
+<p class="text-xs text-[#49659c] mt-1 line-clamp-2">Sent fee invoice #INV-2024-102 and requested digital signature on affidavit.</p>
+</div>
+<!-- Log Item -->
+<div class="relative pl-6">
+<div class="absolute -left-[9px] top-0 size-4 bg-gray-300 dark:bg-gray-700 rounded-full border-4 border-white dark:border-background-dark"></div>
+<p class="text-[10px] font-bold text-gray-500 uppercase">Oct 05, 2024</p>
+<p class="text-sm font-semibold text-[#0d121c] dark:text-white mt-0.5">Office Meeting</p>
+<p class="text-xs text-[#49659c] mt-1 line-clamp-2">Initial consultation for the Tax Appeal matter. Documents scanned and filed.</p>
+</div>
+</div>
+</div>
+<div class="p-4 bg-gray-50 dark:bg-gray-800/20 border-t border-[#e7ebf4] dark:border-gray-800">
+<button class="w-full py-2 bg-white dark:bg-background-dark border border-[#ced7e8] dark:border-gray-700 rounded-lg text-xs font-bold text-[#0d121c] dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                                    + Add New Entry
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

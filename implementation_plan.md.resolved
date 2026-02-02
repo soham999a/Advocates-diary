@@ -1,0 +1,765 @@
+# Advocate Diary - Legal Case Management System
+## Implementation Plan
+
+## Overview
+
+Building a production-quality demo web application for advocates to manage their legal practice. This includes case management, hearing calendar (digital diary), client directory, document management, and a mock e-filing system that mirrors real eCourts workflows.
+
+**Key Point:** This is a functional demo with real UI, authentication, database, and CRUD operations, but with mocked legal integrations (no real court APIs, no real payment gateways).
+
+---
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Firebase & Supabase Configuration**
+> 
+> Before implementation can proceed, you'll need to provide:
+> 1. **Firebase project credentials** (API key, auth domain, project ID)
+> 2. **Supabase connection details** (URL, anon key)
+> 
+> I will create placeholder configuration files that you can fill in with your actual credentials.
+
+> [!NOTE]
+> **Demo Limitations**
+> 
+> The following features will be MOCKED (not connected to real services):
+> - Bar Council verification (will show success for demo)
+> - eCourts integration (manual data entry only)
+> - E-filing submission (generates fake reference IDs)
+> - Payment gateway (shows success screen without real transaction)
+> - SMS notifications (console logs only)
+
+---
+
+## Proposed Changes
+
+### Core Infrastructure
+
+#### [NEW] [package.json](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/package.json)
+Root package.json for monorepo workspace management
+
+#### [NEW] [client/](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client)
+Complete React frontend application with Vite, Tailwind CSS, and all UI components
+
+**Key files:**
+- `vite.config.js` - Vite configuration
+- `tailwind.config.js` - Tailwind with legal-tech color palette
+- `src/App.jsx` - Main app with routing
+- `src/main.jsx` - Entry point with Firebase initialization
+- `.env.example` - Firebase configuration template
+
+#### [NEW] [server/](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/server)
+Express backend with REST APIs and Supabase integration
+
+**Key files:**
+- `index.js` - Express server setup
+- `db/supabase.js` - Supabase client configuration
+- `routes/` - API route handlers
+- `controllers/` - Business logic
+- `middleware/auth.js` - Firebase token verification
+- `.env.example` - Supabase configuration template
+
+---
+
+### Frontend Components & Pages
+
+#### Authentication
+
+**[NEW] [src/pages/Login.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/pages/Login.jsx)**
+- Email/password login with Firebase
+- Form validation
+- Error handling
+- Redirect to dashboard on success
+
+**[NEW] [src/pages/Register.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/pages/Register.jsx)**
+- User registration with Bar Council number
+- Firebase user creation
+- Automatic profile creation in Supabase
+
+**[NEW] [src/context/AuthContext.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/context/AuthContext.jsx)**
+- Global auth state management
+- Firebase auth listener
+- User profile data
+
+**[NEW] [src/components/ProtectedRoute.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/components/ProtectedRoute.jsx)**
+- Route protection wrapper
+- Redirect to login if unauthenticated
+
+---
+
+#### Layout & Navigation
+
+**[NEW] [src/layouts/MainLayout.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/layouts/MainLayout.jsx)**
+- Sidebar navigation
+- Top bar with global search trigger and user menu
+- Responsive design
+
+**[NEW] [src/components/Sidebar.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/components/Sidebar.jsx)**
+- Navigation links: Dashboard, Cases, Calendar, Clients, E-Filing, Reports
+- Active state highlighting
+- Collapsible on mobile
+
+**[NEW] [src/components/TopBar.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/components/TopBar.jsx)**
+- Global search button (Ctrl+K)
+- Notifications icon
+- User profile dropdown with logout
+
+---
+
+#### Dashboard
+
+**[NEW] [src/pages/Dashboard.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/pages/Dashboard.jsx)**
+
+Based on `advocate_main_dashboard` design:
+- Stats cards (Total Cases, Upcoming Hearings, Overdue Tasks, Active Clients)
+- Today's hearings list with time, case number, court
+- Quick action buttons (Add Case, Add Hearing, Upload Document)
+- Recent activity feed
+- Calendar widget showing next 7 days
+
+---
+
+#### Case Management
+
+**[NEW] [src/pages/CaseInventory.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/pages/CaseInventory.jsx)**
+
+Based on `case_inventory_list` design:
+- Data table with columns: Case No, Client, Court, Next Hearing, Status, Actions
+- Search bar (case number, client name, court)
+- Filters: Status (All/Pending/Closed), Court, Date range
+- Status pills with color coding (Pending=yellow, Closed=green, Urgent=red)
+- Add Case button
+- Sortable columns
+- Pagination
+
+**[NEW] [src/pages/CaseDetail.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/pages/CaseDetail.jsx)**
+
+Based on `case_details_&_timeline` design:
+- Case summary header (case number, client, court, judge, matter type)
+- Tab navigation: Details, Timeline, Hearings, Documents
+- **Timeline tab**: Vertical timeline with dots and connecting lines
+  - Each event shows: date, type (Hearing/Order/Filing), description, user
+  - Color-coded by event type
+- **Hearings tab**: List of all hearings with add button
+- **Documents tab**: Uploadable document list with preview
+- Edit case button
+
+**[NEW] [src/components/TimelineView.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/components/TimelineView.jsx)**
+- Vertical timeline visualization
+- Icons for event types
+- Expandable event details
+
+---
+
+#### Advocate Digital Diary (Calendar)
+
+**[NEW] [src/pages/Calendar.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/pages/Calendar.jsx)**
+
+Based on `advocate_digital_diary` design:
+- FullCalendar component with Month, Week, Day views
+- Color-coded events:
+  - Hearings (blue)
+  - Deadlines (red)
+  - Tasks (yellow)
+- Click event to open detail modal
+- Add hearing button
+- Side panel showing:
+  - Upcoming events (next 7 days)
+  - Overdue items
+  - Today's agenda
+- Drag-and-drop to reschedule (demo only, shows confirmation)
+
+**[NEW] [src/components/AddHearingModal.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/components/AddHearingModal.jsx)**
+- Form: Date/Time, Case selection, Court, Hearing type, Notes
+- Link to existing case or create new
+- Reminder settings (email notification)
+
+---
+
+#### Global Search
+
+**[NEW] [src/components/GlobalSearch.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/components/GlobalSearch.jsx)**
+
+Command palette (Ctrl+K to open):
+- Search input with autofocus
+- Categorized results:
+  - **Cases**: Case No, Client, Court
+  - **Clients**: Name, Phone, Email
+  - **Hearings**: Date, Case, Court
+  - **Documents**: Name, Case, Type
+  - **Tasks**: Title, Due Date, Status
+- Fuse.js for fuzzy search across all entities
+- Keyboard navigation (Arrow keys, Enter to select, Esc to close)
+- Recent searches when input is empty
+- Click result to navigate to detail page
+
+---
+
+#### E-Filing Mock
+
+**[NEW] [src/pages/EFiling.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/pages/EFiling.jsx)**
+
+Based on `e-filing_submission_mock` design:
+- Step-based wizard UI:
+  1. **Select Court**: Dropdown (District/High Court)
+  2. **Case Details**: Case type, parties, case number (optional for new)
+  3. **Upload Documents**: 
+     - PDF upload with drag-and-drop
+     - File size validation
+     - PDF format checklist (A4, no hidden text, bookmarked pages)
+  4. **Review & Submit**:
+     - Summary of filing details
+     - Document list with preview links
+- Mock submit button
+- Success page with fake filing reference ID and timestamp
+- Download receipt (PDF mock)
+
+**[NEW] [src/components/FileUploadZone.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/components/FileUploadZone.jsx)**
+- Drag-and-drop file upload
+- PDF validation
+- Progress indicator
+- File list with remove option
+
+---
+
+#### Client Management
+
+**[NEW] [src/pages/ClientDirectory.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/pages/ClientDirectory.jsx)**
+
+Based on `client_management_directory` design:
+- Client list table: Name, Contact, Cases, Outstanding Fees, Last Contact
+- Search by name, phone, email
+- Add Client button
+- Click row to view client detail
+
+**[NEW] [src/pages/ClientDetail.jsx](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/src/pages/ClientDetail.jsx)**
+- Client info card
+- Associated cases list
+- Fees & Invoices:
+  - Outstanding amount highlighted
+  - Invoice history
+  - Payment status (Paid/Pending/Overdue) with color pills
+  - Mock "Record Payment" button
+- Notes section
+
+---
+
+### Backend API Structure
+
+#### Database Schema
+
+**[NEW] [server/db/schema.sql](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/server/db/schema.sql)**
+
+Tables to create in Supabase:
+
+```sql
+-- users table
+users (
+  id uuid primary key,
+  email text unique not null,
+  bar_council_number text,
+  full_name text,
+  phone text,
+  created_at timestamp
+)
+
+-- cases table
+cases (
+  id uuid primary key,
+  case_number text not null,
+  case_title text,
+  client_id uuid references clients(id),
+  court text,
+  judge text,
+  matter_type text,
+  status text,
+  created_by uuid references users(id),
+  created_at timestamp,
+  updated_at timestamp
+)
+
+-- clients table
+clients (
+  id uuid primary key,
+  name text not null,
+  email text,
+  phone text,
+  address text,
+  created_by uuid references users(id),
+  created_at timestamp
+)
+
+-- hearings table
+hearings (
+  id uuid primary key,
+  case_id uuid references cases(id),
+  hearing_date timestamp not null,
+  hearing_type text,
+  court text,
+  notes text,
+  reminder_sent boolean default false,
+  created_by uuid references users(id),
+  created_at timestamp
+)
+
+-- documents table
+documents (
+  id uuid primary key,
+  case_id uuid references cases(id),
+  filename text not null,
+  file_url text,
+  file_type text,
+  uploaded_by uuid references users(id),
+  uploaded_at timestamp
+)
+
+-- tasks table
+tasks (
+  id uuid primary key,
+  case_id uuid references cases(id),
+  title text not null,
+  description text,
+  due_date timestamp,
+  status text,
+  assignee_id uuid references users(id),
+  created_by uuid references users(id),
+  created_at timestamp
+)
+
+-- invoices table
+invoices (
+  id uuid primary key,
+  client_id uuid references clients(id),
+  case_id uuid references cases(id),
+  amount decimal,
+  status text,
+  due_date timestamp,
+  paid_date timestamp,
+  created_by uuid references users(id),
+  created_at timestamp
+)
+```
+
+#### API Routes
+
+**[NEW] [server/routes/cases.js](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/server/routes/cases.js)**
+- `GET /api/cases` - List all cases (with filters)
+- `POST /api/cases` - Create new case
+- `GET /api/cases/:id` - Get case details
+- `PUT /api/cases/:id` - Update case
+- `DELETE /api/cases/:id` - Delete case
+
+**[NEW] [server/routes/clients.js](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/server/routes/clients.js)**
+- `GET /api/clients` - List all clients
+- `POST /api/clients` - Create client
+- `GET /api/clients/:id` - Get client details
+- `PUT /api/clients/:id` - Update client
+
+**[NEW] [server/routes/hearings.js](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/server/routes/hearings.js)**
+- `GET /api/hearings` - List hearings (with date filters)
+- `POST /api/hearings` - Create hearing
+- `PUT /api/hearings/:id` - Update hearing
+- `DELETE /api/hearings/:id` - Delete hearing
+
+**[NEW] [server/routes/documents.js](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/server/routes/documents.js)**
+- `GET /api/documents` - List documents by case
+- `POST /api/documents` - Upload document (stores URL only, actual upload to Supabase Storage)
+- `DELETE /api/documents/:id` - Delete document
+
+**[NEW] [server/routes/search.js](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/server/routes/search.js)**
+- `GET /api/search?q={query}` - Global search across all entities
+
+---
+
+### Configuration & Environment
+
+**[NEW] [client/.env.example](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/client/.env.example)**
+```
+VITE_FIREBASE_API_KEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_API_URL=http://localhost:5000
+```
+
+**[NEW] [server/.env.example](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/server/.env.example)**
+```
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_ANON_KEY=your_supabase_anon_key
+PORT=5000
+```
+
+**[NEW] [README.md](file:///c:/Users/dasso/OneDrive/Desktop/advocate%20diary/README.md)**
+- Project overview
+- Setup instructions
+- Environment configuration guide
+- Demo credentials (if any)
+- Features list
+
+---
+
+## Verification Plan
+
+### Automated Testing
+
+> [!NOTE]
+> For this demo, automated tests are not included to expedite development. All verification will be manual.
+
+### Manual Verification
+
+#### 1. Project Setup Verification
+```powershell
+# Navigate to project root
+cd "c:\Users\dasso\OneDrive\Desktop\advocate diary"
+
+# Install all dependencies
+npm install
+
+# Install client dependencies
+cd client
+npm install
+
+# Install server dependencies
+cd ../server
+npm install
+
+# Verify all packages installed without errors
+```
+
+**Expected outcome:** No installation errors, all dependencies resolved.
+
+---
+
+#### 2. Database Setup Verification
+1. Open Supabase dashboard
+2. Run the SQL from `server/db/schema.sql` in SQL Editor
+3. Verify all 7 tables are created:
+   - users
+   - cases
+   - clients
+   - hearings
+   - documents
+   - tasks
+   - invoices
+4. Check table structures match the schema
+
+**Expected outcome:** All tables visible in Supabase Table Editor with correct columns.
+
+---
+
+#### 3. Backend Server Verification
+```powershell
+# From server directory
+cd server
+
+# Copy .env.example to .env and fill in Supabase credentials
+# Then start server
+npm run dev
+```
+
+**Expected outcome:** 
+- Server starts on `http://localhost:5000`
+- Console shows "Connected to Supabase" or similar message
+- No connection errors
+
+**Manual test:**
+- Open browser to `http://localhost:5000/api/health`
+- Should see: `{"status": "ok"}`
+
+---
+
+#### 4. Frontend Development Server Verification
+```powershell
+# From client directory (in new terminal)
+cd client
+
+# Copy .env.example to .env and fill in Firebase credentials
+# Then start dev server
+npm run dev
+```
+
+**Expected outcome:**
+- Vite dev server starts (typically `http://localhost:5173`)
+- No build errors
+- Console shows successful compilation
+
+**Manual test:**
+- Open browser to `http://localhost:5173`
+- Should see Login page
+- Tailwind styles should be applied (not unstyled HTML)
+
+---
+
+#### 5. Authentication Flow Verification
+
+**Test Registration:**
+1. Click "Register" link from login page
+2. Fill form:
+   - Full Name: "Test Advocate"
+   - Email: "test@example.com"
+   - Bar Council Number: "BAR12345"
+   - Password: "Test@123"
+3. Click Register
+
+**Expected outcome:**
+- User created in Firebase Authentication
+- Redirected to Dashboard
+- User profile created in Supabase `users` table with correct email and bar_council_number
+
+**Test Login:**
+1. Logout from dashboard
+2. Return to login page
+3. Enter registered credentials
+4. Click Login
+
+**Expected outcome:**
+- Successful login
+- Redirected to Dashboard
+- User name displayed in TopBar
+
+---
+
+#### 6. Dashboard Verification
+
+Navigate to Dashboard after login.
+
+**Check stats cards:**
+- Total Cases: 0 (or populated if demo data seeded)
+- Upcoming Hearings: 0
+- Overdue Tasks: 0
+- Active Clients: 0
+
+**Check quick actions:**
+- "Add Case" button visible
+- "Add Hearing" button visible
+- "Upload Document" button visible
+
+**Expected outcome:** Dashboard layout matches `advocate_main_dashboard` design with proper spacing and card layouts.
+
+---
+
+#### 7. Case Management Verification
+
+**Test Case Creation:**
+1. Click "Add Case" button from Dashboard or navigate to Cases page
+2. Fill form:
+   - Case Number: "CRL/123/2024"
+   - Case Title: "Test vs State"
+   - Client: Select from dropdown or create new
+   - Court: "District Court"
+   - Matter Type: "Criminal"
+   - Status: "Pending"
+3. Submit
+
+**Expected outcome:**
+- Case appears in Case Inventory table
+- Case stored in Supabase `cases` table
+
+**Test Case Detail View:**
+1. Click on created case in table
+2. Verify tabs: Details, Timeline, Hearings, Documents
+3. Click each tab to ensure no errors
+
+**Expected outcome:** Case detail page matches `case_details_&_timeline` design with working tab navigation.
+
+---
+
+#### 8. Calendar (Digital Diary) Verification
+
+**Test Add Hearing:**
+1. Navigate to Calendar page
+2. Click "Add Hearing" button
+3. Fill form:
+   - Date: Tomorrow's date
+   - Time: 10:00 AM
+   - Case: Select created case
+   - Court: "District Court"
+   - Hearing Type: "Arguments"
+   - Notes: "First hearing"
+4. Submit
+
+**Expected outcome:**
+- Hearing appears on calendar on selected date
+- Hearing stored in Supabase `hearings` table
+- Event is blue-colored (hearing type)
+
+**Test Calendar Views:**
+1. Toggle between Month, Week, and Day views
+2. Click on created hearing event
+3. Detail modal should open showing hearing info
+
+**Expected outcome:** Calendar layout matches `advocate_digital_diary` design with properly rendered FullCalendar.
+
+---
+
+#### 9. Global Search Verification
+
+**Test Search Functionality:**
+1. From any page, press `Ctrl+K` (or `Cmd+K` on Mac)
+2. Search modal should open
+3. Type case number (e.g., "CRL/123")
+4. Results should appear under "Cases" category
+5. Type client name
+6. Results should appear under "Clients" category
+7. Click a result
+
+**Expected outcome:**
+- Modal opens and closes correctly
+- Search returns relevant results
+- Results are categorized (Cases, Clients, Hearings, Documents, Tasks)
+- Clicking result navigates to correct detail page
+- ESC key closes modal
+
+---
+
+#### 10. E-Filing Mock Verification
+
+**Test Filing Submission:**
+1. Navigate to E-Filing page
+2. Step 1: Select "District Court"
+3. Step 2: Fill case details
+   - Case Type: "Civil"
+   - Plaintiff: "John Doe"
+   - Defendant: "XYZ Corp"
+4. Step 3: Upload a PDF file
+   - Verify file size and format validation
+5. Step 4: Review details
+6. Click "Submit Filing"
+
+**Expected outcome:**
+- Wizard navigation works (Next/Previous buttons)
+- File upload shows progress
+- Success page shows:
+  - Fake filing reference ID (e.g., `EFIL/2024/12345`)
+  - Submission timestamp
+  - Downloadable receipt button (can be mock)
+- Layout matches `e-filing_submission_mock` design
+
+---
+
+#### 11. Client Management Verification
+
+**Test Client Creation:**
+1. Navigate to Clients page
+2. Click "Add Client"
+3. Fill form:
+   - Name: "Rajesh Sharma"
+   - Email: "rajesh@example.com"
+   - Phone: "+91 9876543210"
+   - Address: "123 Main St, Delhi"
+4. Submit
+
+**Expected outcome:**
+- Client appears in client directory table
+- Client stored in Supabase `clients` table
+
+**Test Client Detail View:**
+1. Click on created client
+2. Verify client info displayed
+3. Check "Associated Cases" section
+4. Check "Fees & Invoices" section shows Outstanding: ₹0
+
+**Expected outcome:** Client detail page matches `client_management_directory` design.
+
+---
+
+#### 12. Responsive Design Verification
+
+**Test on different screen sizes:**
+1. Open browser DevTools
+2. Toggle device toolbar (Ctrl+Shift+M)
+3. Test on:
+   - Mobile (375px width)
+   - Tablet (768px width)
+   - Desktop (1920px width)
+
+**Check:**
+- Sidebar collapses to hamburger menu on mobile
+- Tables remain readable (horizontal scroll if needed)
+- Forms stack properly
+- Calendar adjusts to mobile view
+- All buttons remain clickable
+- No horizontal overflow
+
+**Expected outcome:** Application is fully usable on all screen sizes.
+
+---
+
+#### 13. Demo Data Seeding (Optional)
+
+If demo data seed script is created:
+
+```powershell
+cd server
+npm run seed
+```
+
+**Expected outcome:**
+- Console shows seeding progress
+- Supabase tables populated with:
+  - 2-3 clients
+  - 8-10 cases
+  - 15-20 hearings (upcoming and past)
+  - 5-8 documents
+  - 3-5 tasks
+
+**Manual verification:**
+- Dashboard stats update with correct counts
+- Calendar shows populated hearings
+- Case inventory shows multiple cases
+- Global search returns results
+
+---
+
+#### 14. Final End-to-End Verification (Walking Through Demo)
+
+Simulate a complete advocate workflow:
+
+1. **Login** with test advocate
+2. **View Dashboard** - see stats and today's hearings
+3. **Use Global Search** (`Ctrl+K`) - search for "CRL" - navigate to a case
+4. **Case Detail** - view timeline, add a document
+5. **Navigate to Calendar** - see upcoming hearings
+6. **Add new hearing** from calendar
+7. **Navigate to Clients** - view client directory
+8. **Click a client** - see associated cases and fees
+9. **Navigate to E-Filing** - submit a mock filing
+10. **Receive confirmation** with reference ID
+
+**Expected outcome:**
+- All navigation flows work smoothly
+- No console errors
+- Data persists across page refreshes
+- Logout and login works correctly
+
+---
+
+## Success Criteria
+
+✅ All 7 database tables created in Supabase without errors  
+✅ Backend server runs without connection errors  
+✅ Frontend builds and runs with no compilation errors  
+✅ Firebase authentication works (register + login)  
+✅ All 6 main pages render correctly (Dashboard, Cases, Calendar, Search, E-Filing, Clients)  
+✅ CRUD operations work for cases, clients, and hearings  
+✅ Global search (Ctrl+K) indexes and returns results correctly  
+✅ Calendar displays hearings with proper color coding  
+✅ E-filing mock flow completes successfully  
+✅ UI matches design frames from the Design frames folder  
+✅ Application is responsive on mobile, tablet, and desktop  
+✅ No critical console errors or warnings  
+
+---
+
+## Post-Demo Enhancements (Not in current scope)
+
+Future improvements after client approval:
+- Real eCourts API integration
+- Actual payment gateway (Razorpay/Paytm)
+- SMS notifications via Twilio/MSG91
+- Bar Council SSO integration
+- Document OCR and auto-fill
+- Advanced analytics dashboard
+- Team collaboration features
+- Mobile app (React Native)
+

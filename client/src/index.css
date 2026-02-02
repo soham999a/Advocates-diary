@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary-hsl: 210 100% 40%;
+    /* Legal Navy */
+    --secondary-hsl: 45 60% 50%;
+    /* Legal Gold */
+    --accent-hsl: 220 20% 15%;
+    /* Dark Business */
+    --bg-hsl: 210 20% 98%;
+    /* Soft Creamy Gray */
+    --card-bg: rgba(255, 255, 255, 0.85);
+  }
+
+  body {
+    @apply antialiased text-gray-900;
+    background-color: hsl(var(--bg-hsl));
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/80 border border-white/20 shadow-xl;
+    backdrop-filter: blur(12px) saturate(160%);
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 bg-primary-600 text-white rounded-lg transition-all duration-300 font-medium hover:bg-primary-700 hover:shadow-lg hover:shadow-primary-500/30 active:scale-95 flex items-center justify-center gap-2;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 bg-white text-gray-700 rounded-lg border border-gray-200 transition-all duration-300 font-medium hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm active:scale-95 flex items-center justify-center gap-2;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6 transition-all duration-300 hover:shadow-xl hover:shadow-gray-200/50 hover:-translate-y-1;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2.5 bg-gray-50/50 border border-gray-200 rounded-lg outline-none transition-all duration-300 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white;
+  }
+
+  .status-pill {
+    @apply px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider inline-block;
+  }
+
+  .status-pending {
+    @apply bg-amber-100/80 text-amber-700 border border-amber-200/50;
+  }
+
+  .status-closed {
+    @apply bg-emerald-100/80 text-emerald-700 border border-emerald-200/50;
+  }
+
+  .status-urgent {
+    @apply bg-rose-100/80 text-rose-700 border border-rose-200/50;
+  }
+
+  /* Smooth scroll for layout */
+  .custom-scrollbar::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-200 rounded-full hover:bg-gray-300 transition-colors;
+  }
+}
+
+/* Page Transitions */
+.page-enter {
+  @apply opacity-0 translate-y-2;
+}
+
+.page-enter-active {
+  @apply opacity-100 translate-y-0 transition-all duration-500;
+}

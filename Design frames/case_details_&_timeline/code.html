@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Case Details &amp; Timeline | LexManager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d121c] dark:text-white antialiased">
+<div class="relative flex min-h-screen flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark px-6 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-6">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold tracking-tight">LexManager</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-bold border-b-2 border-primary py-1" href="#">My Cases</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Calendar</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Documents</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">E-Filing</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<label class="relative hidden sm:block">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="material-symbols-outlined text-slate-400 text-lg">search</span>
+</span>
+<input class="w-64 rounded-lg bg-slate-100 dark:bg-slate-800 border-none pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary" placeholder="Search cases or docs..."/>
+</label>
+<button class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<div class="size-10 rounded-full border-2 border-primary overflow-hidden">
+<img alt="Lawyer Profile" class="w-full h-full object-cover" data-alt="Professional lawyer profile portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxxF62hi1Ppr3KFiKNVB7vOCvVaKRzNidDL6iqB6za850YqFSs_WXjaPCov8QqQkhzX7KFr6s0BDhaDeK7tuYypzHg-Zsr8w6CgZciPUSfukUrC30i3Iucz3q7wLolNCXQ0eRRMUWzHBdeCafD_rQn5TP5UkYoxn2XI1XLi7guKl9uPppQZxOz1zDGLOkasLppmxlxnMYkujYLD0yuQ9PdUQ0mJKGsyA0AspRBxXxuE26ssccBFatGxqbblaQfb60gkEyWspyTDm-Z"/>
+</div>
+</div>
+</header>
+<!-- Main Content Wrapper -->
+<main class="flex-1 max-w-7xl mx-auto w-full px-4 md:px-10 py-8">
+<!-- Page Heading -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<span class="px-2 py-1 text-xs font-bold uppercase tracking-wider bg-primary/10 text-primary rounded">Ongoing</span>
+<span class="text-slate-500 text-sm font-medium">Case Ref: #2023-DEL-0492</span>
+</div>
+<h1 class="text-4xl font-black tracking-tight">Smith vs. Global Corp Ltd.</h1>
+<div class="flex flex-wrap items-center gap-4 text-slate-500 text-sm md:text-base">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">balance</span>
+<span>High Court of Delhi</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">person_filled</span>
+<span>Hon'ble Justice Malhotra</span>
+</div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 transition-colors rounded-lg font-bold text-sm">
+<span class="material-symbols-outlined text-lg">edit</span>
+                        Edit Case Details
+                    </button>
+<button class="flex items-center gap-2 px-6 py-2 bg-primary text-white hover:bg-primary/90 transition-colors rounded-lg font-bold text-sm shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-lg">add</span>
+                        New Action
+                    </button>
+</div>
+</div>
+<!-- Tabs Navigation -->
+<div class="mb-8 border-b border-slate-200 dark:border-slate-800">
+<div class="flex gap-8">
+<a class="border-b-2 border-primary text-primary font-bold pb-4 px-1 text-sm flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">timeline</span> Case Timeline
+                    </a>
+<a class="border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-bold pb-4 px-1 text-sm flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">folder_open</span> Case Documents
+                    </a>
+<a class="border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-bold pb-4 px-1 text-sm flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">search</span> Legal Research
+                    </a>
+<a class="border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-bold pb-4 px-1 text-sm flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">group</span> Parties &amp; Team
+                    </a>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left Column: Timeline -->
+<div class="lg:col-span-8">
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<h2 class="text-xl font-bold">Case History &amp; Activity</h2>
+<button class="text-sm font-semibold text-primary">Filter Activity</button>
+</div>
+<div class="p-6 relative">
+<!-- Timeline Line -->
+<div class="absolute left-[33px] top-8 bottom-8 w-0.5 bg-slate-200 dark:bg-slate-800"></div>
+<!-- Timeline Item 1 -->
+<div class="relative flex gap-6 pb-10">
+<div class="relative z-10 flex items-center justify-center size-10 rounded-full bg-primary text-white ring-4 ring-white dark:ring-slate-900">
+<span class="material-symbols-outlined text-lg">gavel</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-bold text-slate-500 uppercase tracking-wide">Oct 10, 2023 • 11:30 AM</p>
+<h3 class="text-lg font-bold mt-1">Interlocutory Application Hearing</h3>
+</div>
+<span class="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-[10px] font-black uppercase px-2 py-0.5 rounded">Completed</span>
+</div>
+<div class="mt-3 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+<p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                            The judge heard the arguments for stay of arbitration proceedings. The counsel for Global Corp requested two weeks for filing their reply. Matter adjourned.
+                                        </p>
+<div class="mt-3 flex gap-4">
+<button class="flex items-center gap-1 text-xs font-bold text-primary">
+<span class="material-symbols-outlined text-sm">description</span> View Order
+                                            </button>
+<button class="flex items-center gap-1 text-xs font-bold text-primary">
+<span class="material-symbols-outlined text-sm">mic</span> Audio Note
+                                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative flex gap-6 pb-10">
+<div class="relative z-10 flex items-center justify-center size-10 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 ring-4 ring-white dark:ring-slate-900">
+<span class="material-symbols-outlined text-lg">upload_file</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-slate-500 uppercase tracking-wide">Sep 28, 2023</p>
+<h3 class="text-lg font-bold mt-1">Rejoinder Filed by Petitioner</h3>
+<div class="mt-3 flex flex-wrap gap-2">
+<div class="flex items-center gap-2 px-3 py-2 bg-slate-100 dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary">pdf_off</span>
+<span class="text-xs font-medium">rejoinder_final_sig.pdf</span>
+<span class="material-symbols-outlined text-slate-400 text-sm cursor-pointer">download</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 3 -->
+<div class="relative flex gap-6 pb-10">
+<div class="relative z-10 flex items-center justify-center size-10 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 ring-4 ring-white dark:ring-slate-900">
+<span class="material-symbols-outlined text-lg">event_note</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-slate-500 uppercase tracking-wide">Aug 15, 2023</p>
+<h3 class="text-lg font-bold mt-1">Case Registered &amp; Initial Filing</h3>
+<p class="text-sm text-slate-600 dark:text-slate-300 mt-2">
+                                        Suit for recovery of damages and permanent injunction filed against Global Corp Ltd. Court Fee of ₹45,000 paid via E-Challan.
+                                    </p>
+</div>
+</div>
+<!-- Start Node -->
+<div class="relative flex gap-6">
+<div class="relative z-10 flex items-center justify-center size-10 rounded-full bg-slate-800 text-white ring-4 ring-white dark:ring-slate-900">
+<span class="material-symbols-outlined text-lg">flag</span>
+</div>
+<div class="flex-1 pt-2">
+<h3 class="text-base font-bold">Case Onboarding</h3>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar -->
+<aside class="lg:col-span-4 flex flex-col gap-8 lg:sticky lg:top-24">
+<!-- Upcoming Hearings -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-orange-500">alarm</span>
+                                Upcoming Hearing
+                            </h3>
+<span class="text-xs font-bold text-orange-600 bg-orange-100 dark:bg-orange-900/30 px-2 py-1 rounded">Next Week</span>
+</div>
+<div class="p-4 rounded-lg bg-orange-50 dark:bg-orange-900/10 border border-orange-100 dark:border-orange-900/20">
+<div class="text-2xl font-black text-orange-700 dark:text-orange-400">Nov 15, 2023</div>
+<div class="text-sm font-medium text-orange-600 dark:text-orange-300 mt-1">Wednesday • 10:30 AM</div>
+<div class="mt-4 pt-4 border-t border-orange-200 dark:border-orange-900/30">
+<p class="text-xs font-bold text-slate-500 uppercase">Agenda</p>
+<p class="text-sm font-semibold mt-1">Final Arguments on Application for Stay</p>
+</div>
+</div>
+<button class="w-full mt-4 py-2 text-primary font-bold text-sm bg-primary/5 hover:bg-primary/10 rounded-lg transition-colors">
+                            Add to Calendar
+                        </button>
+</div>
+<!-- Case Information -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+<h3 class="font-bold text-lg mb-6">Case Info</h3>
+<!-- Client Section -->
+<div class="mb-6">
+<p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3">Client (Petitioner)</p>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-500">person</span>
+</div>
+<div>
+<p class="font-bold text-sm">John Smith</p>
+<p class="text-xs text-slate-500">+91 98765 43210</p>
+</div>
+</div>
+</div>
+<!-- Opposite Party -->
+<div class="mb-6">
+<p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3">Opposite Party (Respondent)</p>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-500">corporate_fare</span>
+</div>
+<div>
+<p class="font-bold text-sm">Global Corp Ltd.</p>
+<p class="text-xs text-slate-500">Rep by: Apex Law Chambers</p>
+</div>
+</div>
+</div>
+<!-- Legal Team -->
+<div>
+<p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3">Internal Legal Team</p>
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-slate-300 overflow-hidden">
+<img alt="Team 1" class="w-full h-full object-cover" data-alt="Female legal associate portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdI3GZxOJjtpFO8SOgTXw8-fyBqMdbypAEgmPVLjdxE4xsnbG61-tU7Qwg3tzF-6gXQFqU58DT3Zk2_VcYWDPPTNVR5OxflgHd7PQVa_3y88CwByRxSf71_lzPuVc5hxjFN2DKrTdGY_0eC_t9rYbtYT1mJBMA0I4aquoMGG3-0OpDemYOKO-nMRjWERSuT1F_T6TVJ81jRWjbhMABp69r5wGimjUYXE59Cs3rsvo6zcnJx8Sj7COp0gJO_8Pgq-dH1w-NG8STckvd"/>
+</div>
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-slate-300 overflow-hidden">
+<img alt="Team 2" class="w-full h-full object-cover" data-alt="Male paralegal portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD33XBaexI4uuoPsyF1ZqqfdMLRdwsu_yK0BxwkVLD7FYaPjfdEeINZKOg23YLsmNC89p1lC-J09-Vr7JCl5iiwri0wph8866Gk_2yjkqujPu7YNiF363udeB-yJCQLkyPjtz_eRX_jSfiMDH3InTSXHXseQtqVbBGRfUQVoanO7GjG1lcxaOap7fI-m0SbMlr-IYNKltFtQDCnFSZRubsRJZlK3aXatpwqRRR0Fut4C7WTt80hlshA0zeiWZyRlHZ3l85GYGuU1mM7"/>
+</div>
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-slate-800 flex items-center justify-center text-[10px] font-bold text-slate-300">
+                                    +2
+                                </div>
+</div>
+</div>
+</div>
+<!-- Quick Tools -->
+<div class="grid grid-cols-2 gap-3">
+<button class="flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-primary transition-all group">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary mb-2">print</span>
+<span class="text-xs font-bold">Print Diary</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-primary transition-all group">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary mb-2">share</span>
+<span class="text-xs font-bold">Share Case</span>
+</button>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</body></html>

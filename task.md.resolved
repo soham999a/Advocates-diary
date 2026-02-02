@@ -1,0 +1,102 @@
+# Advocate Diary - Legal Case Management System
+
+## Project Overview
+Building a production-quality DEMO web application for advocates to manage cases, hearings, clients, and documents with calendar integration and global search.
+
+## Tech Stack
+- **Frontend**: React + Vite + Tailwind CSS + React Router
+- **Auth**: Firebase Authentication
+- **Backend**: Node.js + Express
+- **Database**: Supabase PostgreSQL
+- **Calendar**: FullCalendar
+- **Search**: Fuse.js
+
+---
+
+## Task Breakdown
+
+### Phase 1: Project Setup & Architecture
+- [/] Create monorepo folder structure (client + server)
+- [/] Initialize React + Vite with Tailwind CSS
+- [/] Set up Express server
+- [ ] Configure Supabase connection
+- [ ] Set up Firebase Authentication
+- [ ] Create base layout (Sidebar + Topbar)
+- [ ] Set up React Router with all routes
+
+### Phase 2: Authentication System
+- [ ] Firebase auth configuration
+- [ ] Login page UI
+- [ ] Register page UI
+- [ ] Auth context provider
+- [ ] Protected route wrapper
+- [ ] Logout functionality
+
+### Phase 3: Backend API & Database
+- [ ] Design Supabase database schema
+- [ ] Create tables: users, cases, clients, hearings, documents, tasks, invoices
+- [ ] Build REST API structure
+- [ ] Implement CRUD endpoints for cases
+- [ ] Implement CRUD endpoints for clients
+- [ ] Implement CRUD endpoints for hearings
+- [ ] Implement CRUD endpoints for documents
+
+### Phase 4: Dashboard
+- [ ] Dashboard layout
+- [ ] Stats cards (Total Cases, Upcoming Hearings, Overdue)
+- [ ] Today's hearings list
+- [ ] Quick action buttons
+- [ ] Connect to backend APIs
+
+### Phase 5: Case Management
+- [ ] Case Inventory page with table view
+- [ ] Search and filters functionality
+- [ ] Status pills (Pending/Closed/Urgent)
+- [ ] Add Case form/modal
+- [ ] Edit Case functionality
+- [ ] Case Detail page with tabs
+- [ ] Timeline view (vertical)
+- [ ] Hearings tab
+- [ ] Documents tab
+
+### Phase 6: Advocate Digital Diary (Calendar)
+- [ ] FullCalendar integration
+- [ ] Month/Week/Day views
+- [ ] Add hearing to calendar
+- [ ] Click hearing to view details
+- [ ] Backlog/overdue panel
+- [ ] Color-coded events
+- [ ] Sync with hearings API
+
+### Phase 7: Global Search (Ctrl+K)
+- [ ] Command palette UI component
+- [ ] Keyboard shortcut handler (Ctrl+K)
+- [ ] Fuse.js integration
+- [ ] Index all searchable data
+- [ ] Categorized results (Cases, Clients, Hearings, Documents, Tasks)
+- [ ] Navigation on result click
+- [ ] Recent searches
+
+### Phase 8: E-Filing Mock
+- [ ] E-Filing page UI (step-based)
+- [ ] Court selection
+- [ ] Case details form
+- [ ] PDF upload component
+- [ ] Filing preview
+- [ ] Mock submission with fake reference ID
+- [ ] Success confirmation page
+
+### Phase 9: Client Management
+- [ ] Client list page
+- [ ] Client detail view
+- [ ] Outstanding fees display
+- [ ] Payment status (demo)
+- [ ] Add/Edit client forms
+
+### Phase 10: Polish & Demo Data
+- [ ] Seed demo data (cases, clients, hearings)
+- [ ] Empty states for all pages
+- [ ] Loading states
+- [ ] Error handling
+- [ ] Responsive design check
+- [ ] Final UI polish
