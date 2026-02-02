@@ -5,9 +5,11 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
-    console.warn('⚠️  Supabase credentials not found. Please configure .env file.');
+    console.error('❌ CRITICAL ERROR: Supabase credentials missing from environment.');
+} else {
+    console.log('✅ Supabase configuration detected');
 }
 
-const supabase = createClient(supabaseUrl || '', supabaseKey || '');
+const supabase = createClient(supabaseUrl || 'https://placeholder.supabase.co', supabaseKey || 'placeholder');
 
 module.exports = supabase;

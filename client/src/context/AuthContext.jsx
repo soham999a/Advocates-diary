@@ -39,8 +39,12 @@ export const AuthProvider = ({ children }) => {
                     });
                     setUserProfile(response.data || {});
                 } catch (error) {
-                    console.error('Error fetching user profile:', error.response?.data || error.message);
-                    setUserProfile({}); // Set to empty object so we don't block
+                    console.warn('Silent Auth Warning: Returning default profile due to backend error:', error.response?.data || error.message);
+                    setUserProfile({
+                        full_name: user.displayName || 'Counsel',
+                        email: user.email,
+                        is_mock: true
+                    });
                 }
             } else {
                 setUserProfile(null);

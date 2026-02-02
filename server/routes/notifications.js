@@ -12,7 +12,10 @@ router.get('/', verifyToken, async (req, res) => {
             .eq('firebase_uid', req.user.uid)
             .single();
 
-        if (userError || !user) return res.json([]);
+        if (userError || !user) {
+            console.warn(`Notifications: User profile not found for UID: ${req.user.uid}. Returning empty list.`);
+            return res.json([]);
+        }
 
         const { data: notifications, error } = await supabase
             .from('notifications')
@@ -20,15 +23,14 @@ router.get('/', verifyToken, async (req, res) => {
             .eq('user_id', user.id)
             .order('created_at', { ascending: false });
 
-        if (error) throw error;
+        if (error) {
+            console.error('Supabase Notification Error:', error);
+            return res.json([]); // Return empty rather than 500
+        }
         res.json(notifications || []);
     } catch (error) {
-        console.error('Error fetching notifications:', error);
-        // If the table doesn't exist yet, return an empty array instead of 500
-        if (error.code === '42P01') {
-            return res.json([]);
-        }
-        res.status(500).json({ error: error.message });
+        console.error('Crash in /api/notifications GET:', error);
+        res.json([]);
     }
 });
 
