@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../firebase';
 import { Search, X, Briefcase, Users, Calendar, FileText, Clock } from 'lucide-react';
 import Fuse from 'fuse.js';
 import axios from 'axios';
@@ -26,13 +27,13 @@ const GlobalSearch = ({ isOpen, onClose }) => {
     const fetchSearchData = async () => {
         try {
             const token = await currentUser.getIdToken();
-            const headers = { Authorization: `Bearer ${token}` };
+            const headers = { Authorization: `Bearer ${token} ` };
 
             // Fetch all searchable data
             const [casesRes, clientsRes, hearingsRes] = await Promise.all([
-                axios.get(`${import.meta.env.VITE_API_URL}/api/cases`, { headers }),
-                axios.get(`${import.meta.env.VITE_API_URL}/api/clients`, { headers }),
-                axios.get(`${import.meta.env.VITE_API_URL}/api/hearings`, { headers })
+                axios.get(`${API_URL} /api/cases`, { headers }),
+                axios.get(`${API_URL} /api/clients`, { headers }),
+                axios.get(`${API_URL} /api/hearings`, { headers })
             ]);
 
             const combinedData = [
@@ -71,9 +72,9 @@ const GlobalSearch = ({ isOpen, onClose }) => {
 
     const handleResultClick = (result) => {
         if (result.type === 'case') {
-            navigate(`/cases/${result.id}`);
+            navigate(`/ cases / ${result.id} `);
         } else if (result.type === 'client') {
-            navigate(`/clients/${result.id}`);
+            navigate(`/ clients / ${result.id} `);
         } else if (result.type === 'hearing') {
             navigate('/calendar');
         }
@@ -160,7 +161,7 @@ const GlobalSearch = ({ isOpen, onClose }) => {
                                         </p>
                                         {typeResults.map((result) => (
                                             <button
-                                                key={`${result.type}-${result.id}`}
+                                                key={`${result.type} -${result.id} `}
                                                 onClick={() => handleResultClick(result)}
                                                 className="w-full flex items-center gap-3 px-3 py-3 hover:bg-gray-50 rounded-lg transition-colors text-left"
                                             >

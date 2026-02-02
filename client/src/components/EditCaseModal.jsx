@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { X, Save } from 'lucide-react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../firebase';
 
 const EditCaseModal = ({ isOpen, onClose, caseData, onCaseUpdated }) => {
     const { currentUser } = useAuth();
@@ -37,7 +38,7 @@ const EditCaseModal = ({ isOpen, onClose, caseData, onCaseUpdated }) => {
         setLoading(true);
         try {
             const token = await currentUser.getIdToken();
-            await axios.patch(`${import.meta.env.VITE_API_URL}/api/cases/${caseData.id}`, formData, {
+            await axios.put(`${API_URL}/api/cases/${caseData.id}`, formData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             onCaseUpdated();

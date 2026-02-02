@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { X, Upload, FileText } from 'lucide-react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../firebase';
 
 const AddDocumentModal = ({ isOpen, onClose, onDocumentAdded, initialCaseId }) => {
     const { currentUser } = useAuth();
@@ -30,7 +31,7 @@ const AddDocumentModal = ({ isOpen, onClose, onDocumentAdded, initialCaseId }) =
     const fetchCases = async () => {
         try {
             const token = await currentUser.getIdToken();
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/cases`, {
+            const response = await axios.get(`${API_URL}/api/cases`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setCases(response.data);
@@ -74,7 +75,7 @@ const AddDocumentModal = ({ isOpen, onClose, onDocumentAdded, initialCaseId }) =
 
             // In a real app, this would be a multipart/form-data upload to storage
             // Here we just save the metadata to the database
-            await axios.post(`${import.meta.env.VITE_API_URL}/api/documents`, {
+            await axios.post(`${API_URL}/api/documents`, {
                 ...formData,
                 file_url: 'https://example.com/' + (selectedFile?.name || 'mock-file.pdf') // Mock URL
             }, {

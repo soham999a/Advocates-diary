@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { auth, API_URL } from '../firebase';
 
 const AddHearingModal = ({ isOpen, onClose, onHearingAdded, initialCaseId }) => {
     const { currentUser } = useAuth();
@@ -30,7 +31,7 @@ const AddHearingModal = ({ isOpen, onClose, onHearingAdded, initialCaseId }) => 
     const fetchCases = async () => {
         try {
             const token = await currentUser.getIdToken();
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/cases`, {
+            const response = await axios.get(`${API_URL}/api/cases`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setCases(response.data);
@@ -48,7 +49,7 @@ const AddHearingModal = ({ isOpen, onClose, onHearingAdded, initialCaseId }) => 
         setLoading(true);
         try {
             const token = await currentUser.getIdToken();
-            await axios.post(`${import.meta.env.VITE_API_URL}/api/hearings`, formData, {
+            await axios.post(`${API_URL}/api/hearings`, formData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             onHearingAdded();

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { auth, API_URL } from '../firebase';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -25,13 +26,13 @@ const Calendar = () => {
     const fetchHearings = async () => {
         try {
             const token = await currentUser.getIdToken();
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/hearings`, {
-                headers: { Authorization: `Bearer ${token}` }
+            const response = await axios.get(`${API_URL} /api/hearings`, {
+                headers: { Authorization: `Bearer ${token} ` }
             });
 
             const formattedEvents = Array.isArray(response.data) ? response.data.map(hearing => ({
                 id: hearing.id,
-                title: `${hearing.case_number || 'N/A'} - ${hearing.hearing_type || 'Hearing'}`,
+                title: `${hearing.case_number || 'N/A'} - ${hearing.hearing_type || 'Hearing'} `,
                 start: hearing.hearing_date,
                 backgroundColor: '#0ea5e9',
                 borderColor: '#0ea5e9',

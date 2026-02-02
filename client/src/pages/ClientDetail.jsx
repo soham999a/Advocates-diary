@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { auth, API_URL } from '../firebase';
 import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, Mail, Phone, MapPin, Briefcase, DollarSign, FileText } from 'lucide-react';
 import axios from 'axios';
@@ -18,7 +19,7 @@ const ClientDetail = () => {
     const fetchClientDetails = async () => {
         try {
             const token = await currentUser.getIdToken();
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/clients/${id}`, {
+            const response = await axios.get(`${API_URL}/api/clients/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setClient(response.data);

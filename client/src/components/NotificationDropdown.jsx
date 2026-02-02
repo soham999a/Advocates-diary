@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { Bell, Calendar, Briefcase, FileText, Check, Clock, X } from 'lucide-react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { auth, API_URL } from '../firebase';
 
 const NotificationDropdown = ({ isOpen, onClose }) => {
     const { currentUser } = useAuth();
@@ -27,7 +28,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
     const fetchNotifications = async () => {
         try {
             const token = await currentUser.getIdToken();
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/notifications`, {
+            const response = await axios.get(`${API_URL}/api/notifications`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setNotifications(response.data);
@@ -41,7 +42,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
     const markAsRead = async (id) => {
         try {
             const token = await currentUser.getIdToken();
-            await axios.patch(`${import.meta.env.VITE_API_URL}/api/notifications/${id}/read`, {}, {
+            await axios.patch(`${API_URL}/api/notifications/${id}/read`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setNotifications(notifications.map(n => n.id === id ? { ...n, is_read: true } : n));
@@ -53,7 +54,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
     const markAllRead = async () => {
         try {
             const token = await currentUser.getIdToken();
-            await axios.patch(`${import.meta.env.VITE_API_URL}/api/notifications/read-all`, {}, {
+            await axios.patch(`${API_URL}/api/notifications/read-all`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setNotifications(notifications.map(n => ({ ...n, is_read: true })));

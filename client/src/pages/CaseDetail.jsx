@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { auth, API_URL } from '../firebase';
 import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, Edit, FileText, Calendar as CalendarIcon, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -26,8 +27,8 @@ const CaseDetail = () => {
     const fetchCaseDetails = async () => {
         try {
             const token = await currentUser.getIdToken();
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/cases/${id}`, {
-                headers: { Authorization: `Bearer ${token}` }
+            const response = await axios.get(`${API_URL} /api/cases / ${id} `, {
+                headers: { Authorization: `Bearer ${token} ` }
             });
             setCaseData(response.data);
         } catch (error) {
@@ -132,10 +133,10 @@ const CaseDetail = () => {
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
-                            className={`flex items-center gap-2 pb-4 border-b-2 transition-colors ${activeTab === tab.id
-                                ? 'border-primary-600 text-primary-600'
-                                : 'border-transparent text-gray-600 hover:text-gray-900'
-                                }`}
+                            className={`flex items - center gap - 2 pb - 4 border - b - 2 transition - colors ${activeTab === tab.id
+                                    ? 'border-primary-600 text-primary-600'
+                                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                                } `}
                         >
                             <tab.icon className="w-5 h-5" />
                             <span className="font-medium">{tab.label}</span>

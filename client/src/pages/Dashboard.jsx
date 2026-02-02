@@ -45,15 +45,15 @@ const Dashboard = () => {
             const headers = { Authorization: `Bearer ${token} ` };
 
             // Fetch stats
-            const statsRes = await axios.get(`${API_URL} /api/dashboard / stats`, { headers });
+            const statsRes = await axios.get(`${API_URL}/api/dashboard/stats`, { headers });
             setStats(statsRes.data);
 
             // Fetch today's hearings
-            const hearingsRes = await axios.get(`${import.meta.env.VITE_API_URL} /api/hearings / today`, { headers });
+            const hearingsRes = await axios.get(`${API_URL}/api/hearings/today`, { headers });
             setTodayHearings(hearingsRes.data);
 
             // Fetch recent activity
-            const activityRes = await axios.get(`${import.meta.env.VITE_API_URL} /api/dashboard / activity`, { headers });
+            const activityRes = await axios.get(`${API_URL}/api/dashboard/activity`, { headers });
             setRecentActivity(activityRes.data);
         } catch (error) {
             console.error('Error fetching dashboard data:', error);

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { auth, API_URL } from '../firebase';
 import { Search, Filter, Plus, Eye, Briefcase } from 'lucide-react';
 import axios from 'axios';
 import AddCaseModal from '../components/AddCaseModal';
@@ -21,7 +22,7 @@ const CaseInventory = () => {
     const fetchCases = async () => {
         try {
             const token = await currentUser.getIdToken();
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/cases`, {
+            const response = await axios.get(`${API_URL}/api/cases`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setCases(response.data);

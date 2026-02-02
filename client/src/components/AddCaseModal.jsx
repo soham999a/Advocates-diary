@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { X, Plus } from 'lucide-react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../firebase';
 
 const AddCaseModal = ({ isOpen, onClose, onCaseAdded }) => {
     const { currentUser } = useAuth();
@@ -27,8 +28,8 @@ const AddCaseModal = ({ isOpen, onClose, onCaseAdded }) => {
     const fetchClients = async () => {
         try {
             const token = await currentUser.getIdToken();
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/clients`, {
-                headers: { Authorization: `Bearer ${token}` }
+            const response = await axios.get(`${import.meta.env.VITE_API_URL} /api/clients`, {
+                headers: { Authorization: `Bearer ${token} ` }
             });
             setClients(response.data);
         } catch (error) {
@@ -45,8 +46,8 @@ const AddCaseModal = ({ isOpen, onClose, onCaseAdded }) => {
         setLoading(true);
         try {
             const token = await currentUser.getIdToken();
-            await axios.post(`${import.meta.env.VITE_API_URL}/api/cases`, formData, {
-                headers: { Authorization: `Bearer ${token}` }
+            await axios.post(`${API_URL} /api/cases`, formData, {
+                headers: { Authorization: `Bearer ${token} ` }
             });
             onCaseAdded();
             onClose();

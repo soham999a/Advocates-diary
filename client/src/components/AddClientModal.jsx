@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import axios from 'axios';
+import { auth, API_URL } from '../firebase';
 import { useAuth } from '../context/AuthContext';
 
 const AddClientModal = ({ isOpen, onClose, onClientAdded }) => {
@@ -22,7 +23,7 @@ const AddClientModal = ({ isOpen, onClose, onClientAdded }) => {
         setLoading(true);
         try {
             const token = await currentUser.getIdToken();
-            await axios.post(`${import.meta.env.VITE_API_URL}/api/clients`, formData, {
+            await axios.post(`${API_URL}/api/clients`, formData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             onClientAdded();

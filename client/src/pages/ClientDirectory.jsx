@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../firebase';
 import { Search, Plus, Eye, Phone, Mail } from 'lucide-react';
 import axios from 'axios';
 import AddClientModal from '../components/AddClientModal';
@@ -20,8 +21,8 @@ const ClientDirectory = () => {
     const fetchClients = async () => {
         try {
             const token = await currentUser.getIdToken();
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/clients`, {
-                headers: { Authorization: `Bearer ${token}` }
+            const response = await axios.get(`${API_URL} /api/clients`, {
+                headers: { Authorization: `Bearer ${token} ` }
             });
             setClients(response.data);
         } catch (error) {
@@ -137,12 +138,12 @@ const ClientDirectory = () => {
                             <div className="pt-4 border-t border-gray-200">
                                 <div className="flex items-center justify-between mb-3">
                                     <span className="text-sm text-gray-600">Outstanding Fees</span>
-                                    <span className={`font-semibold ${client.outstanding_fees > 0 ? 'text-red-600' : 'text-green-600'}`}>
+                                    <span className={`font - semibold ${client.outstanding_fees > 0 ? 'text-red-600' : 'text-green-600'} `}>
                                         ₹{client.outstanding_fees.toLocaleString('en-IN')}
                                     </span>
                                 </div>
                                 <button
-                                    onClick={() => navigate(`/clients/${client.id}`)}
+                                    onClick={() => navigate(`/ clients / ${client.id} `)}
                                     className="w-full btn-secondary flex items-center justify-center gap-2"
                                 >
                                     <Eye className="w-4 h-4" />
