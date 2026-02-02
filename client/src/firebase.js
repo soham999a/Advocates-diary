@@ -20,14 +20,20 @@ if (import.meta.env.PROD && !firebaseConfig.apiKey) {
 }
 
 // Initialize Firebase
-let app;
-try {
-    app = initializeApp(firebaseConfig);
-} catch (error) {
-    console.error("Firebase initialization failed:", error);
+let app = null;
+let auth = null;
+
+if (firebaseConfig.apiKey) {
+    try {
+        app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        console.log("Firebase initialized successfully");
+    } catch (error) {
+        console.error("Firebase initialization failed:", error);
+    }
+} else {
+    console.warn("Firebase API Key is missing! App will run in offline/limited mode.");
 }
 
-// Initialize Firebase Authentication
-export const auth = app ? getAuth(app) : null;
-
+export { auth };
 export default app;
