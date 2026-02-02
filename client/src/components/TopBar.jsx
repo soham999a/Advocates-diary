@@ -30,7 +30,7 @@ const TopBar = ({ onSearchClick, onMenuClick }) => {
             const response = await axios.get(`${API_URL}/api/notifications/unread`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            const unread = response.data.filter(n => !n.is_read).length;
+            const unread = Array.isArray(response.data) ? response.data.filter(n => !n.is_read).length : 0;
             setUnreadCount(unread);
         } catch (error) {
             console.error('Error fetching unread count:', error);

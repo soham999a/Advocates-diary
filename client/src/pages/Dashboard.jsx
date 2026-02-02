@@ -225,15 +225,7 @@ const Dashboard = () => {
                     </div>
 
                     <div className="space-y-4">
-                        {(!Array.isArray(todayHearings) || todayHearings.length === 0) ? (
-                            <div className="text-center py-12 md:py-20 bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-100">
-                                <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-sm">
-                                    <Clock className="w-6 h-6 md:w-8 md:h-8 text-gray-200" />
-                                </div>
-                                <p className="text-gray-400 font-bold text-sm">No scheduled hearings for today</p>
-                                <p className="text-[10px] text-gray-300 uppercase font-black tracking-widest mt-2">Clear Docket</p>
-                            </div>
-                        ) : (
+                        {(Array.isArray(todayHearings) && todayHearings.length > 0) ? (
                             <div className="grid grid-cols-1 gap-4">
                                 {todayHearings.map((hearing) => (
                                     <div
@@ -262,6 +254,14 @@ const Dashboard = () => {
                                     </div>
                                 ))}
                             </div>
+                        ) : (
+                            <div className="text-center py-12 md:py-20 bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-100">
+                                <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-sm">
+                                    <Clock className="w-6 h-6 md:w-8 md:h-8 text-gray-200" />
+                                </div>
+                                <p className="text-gray-400 font-bold text-sm">No scheduled hearings for today</p>
+                                <p className="text-[10px] text-gray-300 uppercase font-black tracking-widest mt-2">Clear Docket</p>
+                            </div>
                         )}
                     </div>
                 </div>
@@ -278,12 +278,10 @@ const Dashboard = () => {
                         </div>
                     </div>
                     <div className="space-y-6 md:space-y-8 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-0.5 before:bg-gray-100">
-                        {(!Array.isArray(recentActivity) || recentActivity.length === 0) ? (
-                            <p className="text-gray-400 text-xs font-bold text-center py-4 italic">Synchronizing stream...</p>
-                        ) : (
+                        {Array.isArray(recentActivity) && recentActivity.length > 0 ? (
                             recentActivity.map((activity) => (
                                 <div key={activity.id} className="flex items-start gap-4 relative z-10 transition-transform hover:translate-x-1 cursor-default">
-                                    <div className={`w - [22px] h - [22px] rounded - full shrink - 0 border - 4 border - white shadow - sm ${activity?.iconColor?.replace('bg-', 'bg-') || 'bg-gray-400'} `}></div>
+                                    <div className={`w-[22px] h-[22px] rounded-full shrink-0 border-4 border-white shadow-sm ${activity?.iconColor?.replace('bg-', 'bg-') || 'bg-gray-400'}`}></div>
                                     <div className="min-w-0">
                                         <p className="text-[11px] md:text-xs text-gray-900 font-bold tracking-tight uppercase leading-tight line-clamp-1">
                                             {activity.title}
@@ -295,6 +293,8 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                             ))
+                        ) : (
+                            <p className="text-gray-400 text-xs font-bold text-center py-4 italic">Synchronizing stream...</p>
                         )}
                     </div>
                 </div>

@@ -123,7 +123,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
                     </div>
                 ) : (
                     <div className="divide-y divide-gray-50">
-                        {notifications.map((notif) => (
+                        {Array.isArray(notifications) && notifications.map((notif) => (
                             <div
                                 key={notif.id}
                                 className={`p-4 hover:bg-gray-50/80 transition-all cursor-pointer group relative ${!notif.is_read ? 'bg-primary-50/20' : ''}`}
