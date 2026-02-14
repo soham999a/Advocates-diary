@@ -57,13 +57,23 @@ router.get('/profile', verifyToken, async (req, res) => {
                 console.warn('⚠️ Profile not found for UID:', firebaseUid);
                 return res.status(404).json({ error: 'User profile not found' });
             }
-            console.error('❌ Supabase Fetch Error:', error.message);
-            return res.status(500).json({ error: 'Database error fetching profile', message: error.message });
+            console.error('❌ Supabase Fetch Error:', error);
+            return res.status(500).json({
+                error: 'Database error fetching profile',
+                message: error.message,
+                code: error.code,
+                hint: error.hint,
+                details: error.details
+            });
         }
         res.json(data);
     } catch (error) {
         console.error('💥 Crash in /api/users/profile GET:', error);
-        res.status(500).json({ error: 'Server crash fetching profile', message: error.message });
+        res.status(500).json({
+            error: 'Server crash fetching profile',
+            message: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     }
 });
 

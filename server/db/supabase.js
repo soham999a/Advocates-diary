@@ -6,8 +6,12 @@ const supabaseKey = process.env.SUPABASE_ANON_KEY || 'MISSING_SUPABASE_KEY';
 
 let supabase;
 try {
-    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_URL.includes('MISSING')) {
-        console.error('❌ CRITICAL: Supabase credentials missing.');
+    const isMissing = !process.env.SUPABASE_URL ||
+        !process.env.SUPABASE_ANON_KEY ||
+        (typeof process.env.SUPABASE_URL === 'string' && process.env.SUPABASE_URL.includes('MISSING'));
+
+    if (isMissing) {
+        console.error('❌ CRITICAL: Supabase credentials missing or malformed.');
 
         // Use a Proxy to catch all nested method calls and prevent crashes
         const createMock = () => {
@@ -26,15 +30,20 @@ try {
                 lte: () => createMock(),
                 order: () => createMock(),
                 limit: () => createMock(),
-                single: () => Promise.resolve({ data: null, error: { message: 'Supabase URL missing', code: 'CONFIG_MISSING' } }),
-                then: (cb) => Promise.resolve({ data: null, error: { message: 'Supabase URL missing', code: 'CONFIG_MISSING' } }).then(cb),
-                catch: (cb) => Promise.resolve({ data: null, error: { message: 'Supabase URL missing', code: 'CONFIG_MISSING' } }).catch(cb)
+                single: () => Promise.resolve({ data: null, error: { message: 'Database Configuration Missing (Check Vercel Env Vars)', code: 'CONFIG_MISSING' } }),
+                then: (cb) => Promise.resolve({ data: null, error: { message: 'Database Configuration Missing', code: 'CONFIG_MISSING' } }).then(cb),
+                catch: (cb) => Promise.resolve({ data: null, error: { message: 'Database Configuration Missing', code: 'CONFIG_MISSING' } }).catch(cb)
             };
             return mock;
         };
         supabase = createMock();
     } else {
-        supabase = createClient(supabaseUrl, supabaseKey);
+        console.log('🔌 Initializing Supabase client for URL:', supabaseUrl.substring(0, 15) + '...');
+        supabase = createClient(supabaseUrl, supabaseKey, {
+            auth: {
+                persistSession: false
+            }
+        });
     }
 } catch (error) {
     console.error('❌ Supabase Init Error:', error);
