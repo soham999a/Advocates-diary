@@ -81,7 +81,13 @@ router.post('/', verifyToken, async (req, res) => {
             .eq('firebase_uid', req.user.uid)
             .single();
 
-        if (userError || !user) return res.status(404).json({ error: 'User profile not found' });
+        if (userError || !user) {
+            console.error('❌ Client Creation Failed: User profile missing in DB for UID:', req.user.uid);
+            return res.status(404).json({
+                error: 'User profile not found',
+                message: 'Your profile has not been synced with the database. Please refresh the page or logout and login again.'
+            });
+        }
 
         const { data, error } = await supabase
             .from('clients')
@@ -92,11 +98,14 @@ router.post('/', verifyToken, async (req, res) => {
             .select()
             .single();
 
-        if (error) throw error;
+        if (error) {
+            console.error('❌ Supabase Client Insert Error:', error);
+            throw error;
+        }
         res.json(data);
     } catch (error) {
-        console.error('Error creating client:', error);
-        res.status(500).json({ error: error.message });
+        console.error('💥 Error creating client:', error);
+        res.status(500).json({ error: 'Database error during client creation', message: error.message });
     }
 });
 

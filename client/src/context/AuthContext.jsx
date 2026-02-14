@@ -32,14 +32,32 @@ export const AuthProvider = ({ children }) => {
 
             if (user) {
                 // Fetch user profile from backend
+                setLoading(true);
                 try {
                     const token = await user.getIdToken();
-                    const response = await axios.get(`${API_URL}/api/users/profile`, {
-                        headers: { Authorization: `Bearer ${token}` }
-                    });
-                    setUserProfile(response.data || {});
+                    try {
+                        const response = await axios.get(`${API_URL}/api/users/profile`, {
+                            headers: { Authorization: `Bearer ${token}` }
+                        });
+                        setUserProfile(response.data || {});
+                    } catch (fetchError) {
+                        // If profile doesn't exist (404), try to create it
+                        if (fetchError.response?.status === 404) {
+                            console.log('Creating missing profile for user...');
+                            const syncResponse = await axios.post(`${API_URL}/api/users/profile`, {
+                                email: user.email,
+                                fullName: user.displayName || 'Counsel',
+                                photoURL: user.photoURL
+                            }, {
+                                headers: { Authorization: `Bearer ${token}` }
+                            });
+                            setUserProfile(syncResponse.data || {});
+                        } else {
+                            throw fetchError;
+                        }
+                    }
                 } catch (error) {
-                    console.warn('Silent Auth Warning: Returning default profile due to backend error:', error.response?.data || error.message);
+                    console.error('Profile identification failed:', error.response?.data || error.message);
                     setUserProfile({
                         full_name: user.displayName || 'Counsel',
                         email: user.email,
